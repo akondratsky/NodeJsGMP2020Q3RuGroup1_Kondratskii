@@ -3,7 +3,7 @@ const fs = require('fs');
 const PluckObjectTransformStream = require('./PluckObjectTransformStream');
 
 const csvFile = './csv/table.csv';
-const outputFile = './output_task2-2.txt';
+const outputFile = './output_task1-2.txt';
 
 const handleError = (err) => console.error(err);
 

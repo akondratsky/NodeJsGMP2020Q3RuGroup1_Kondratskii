@@ -1,8 +1,9 @@
 # NodeJsGMP2020Q3RuGroup1_Kondratskii
 
-## Task1
+## Task 1
 
-`npm run task1-1`
+`cd task1` and then run task:
 
-
-
+- `npm run task1-1`
+- `npm run task1-2`
+- `npm run task1-3`
