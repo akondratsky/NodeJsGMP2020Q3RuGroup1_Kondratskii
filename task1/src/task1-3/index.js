@@ -10,9 +10,9 @@ const handleError = (err) => console.error(err);
 const readStream = fs.createReadStream(csvFile);
 const writeStream = fs.createWriteStream(outputFile);
 const pluckTransformer = new PluckObjectTransformStream([
-    'Book',
-    'Author',
-    'Price'
+    { field: 'Book' },
+    { field: 'Author' },
+    { field: 'Price', isNumber: true }
 ]);
 
 readStream.on('error', handleError);

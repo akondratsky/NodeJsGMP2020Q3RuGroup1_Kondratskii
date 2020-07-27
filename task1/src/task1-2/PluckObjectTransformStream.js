@@ -14,8 +14,10 @@ class PluckObjectTransformStream extends Transform {
             const serializedObject = chunk.toString('utf8');
             const readObject = JSON.parse(serializedObject);
             const writeObject = {};
-            this.fieldNames.forEach((field) => {
-                writeObject[field.toLowerCase()] = readObject[field];
+            this.fieldNames.forEach(({ field, isNumber }) => {
+                writeObject[field.toLowerCase()] = isNumber ?
+                    parseFloat(readObject[field])
+                    : readObject[field];
             });
             callback(null, JSON.stringify(writeObject) + '\r\n');
           } catch (err) {
