@@ -1,0 +1,22 @@
+{
+  "name": "nodejsgmp2020q3rugroup1_kondratskii",
+  "version": "1.0.0",
+  "description": "homework",
+  "main": "index.js",
+  "scripts": {
+    "task1-1": "nodemon ./task1/task1-1.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akondratsky/NodeJsGMP2020Q3RuGroup1_Kondratskii.git"
+  },
+  "author": "akondratsky",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/akondratsky/NodeJsGMP2020Q3RuGroup1_Kondratskii/issues"
+  },
+  "homepage": "https://github.com/akondratsky/NodeJsGMP2020Q3RuGroup1_Kondratskii#readme",
+  "devDependencies": {
+    "nodemon": "2.0.4"
+  }
+}
