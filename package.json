@@ -4,7 +4,8 @@
   "description": "homework",
   "main": "index.js",
   "scripts": {
-    "task1-1": "nodemon ./task1/task1-1.js"
+    "task1-1": "nodemon ./task1/task1-1.js",
+    "task1-2": "nodemon ./task1/task1-2/index.js"
   },
   "repository": {
     "type": "git",
@@ -18,5 +19,8 @@
   "homepage": "https://github.com/akondratsky/NodeJsGMP2020Q3RuGroup1_Kondratskii#readme",
   "devDependencies": {
     "nodemon": "2.0.4"
+  },
+  "dependencies": {
+    "csvtojson": "2.0.10"
   }
 }
