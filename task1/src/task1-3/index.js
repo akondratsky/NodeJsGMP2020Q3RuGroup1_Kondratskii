@@ -1,25 +1,22 @@
 import csv from 'csvtojson';
 import fs from 'fs';
 import PluckObjectTransformStream from './PluckObjectTransformStream';
+import { pipeline } from 'stream';
 
 const csvFile = './csv/table.csv';
-const outputFile = './output_task1-3.txt';
-
-const handleError = (err) => console.error(err);
-
-const readStream = fs.createReadStream(csvFile);
-const writeStream = fs.createWriteStream(outputFile);
-const pluckTransformer = new PluckObjectTransformStream([
+const outputFile = './output_task1-2.txt';
+const pluckStreamOptions = [
     { field: 'Book' },
     { field: 'Author' },
     { field: 'Price', isNumber: true }
-]);
+];
 
-readStream.on('error', handleError);
-writeStream.on('error', handleError);
-pluckTransformer.on('error', handleError);
-
-readStream
-    .pipe(csv())
-    .pipe(pluckTransformer)
-    .pipe(writeStream);
+pipeline(
+    fs.createReadStream(csvFile),
+    csv(),
+    new PluckObjectTransformStream(pluckStreamOptions),
+    fs.createWriteStream(outputFile),
+    (err) => err ?
+            console.error('pipeline failed', err)
+            : console.log('pipeline succeed')
+);
