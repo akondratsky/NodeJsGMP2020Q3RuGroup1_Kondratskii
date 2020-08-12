@@ -1,33 +1,43 @@
-const users = [{
-    id: '42',
-    login: 'mooglass_domas',
-    password: 'hehehe',
-    age: 42,
-    isDeleted: false
-}];
+interface User {
+    id: string,
+    login: string,
+    password: string,
+    age: number,
+    isDeleted: boolean
+}
 
-export const getUserById = (idToFind) => {
+const users: User[] = [
+    ({
+        id: '42',
+        login: 'mooglass_domas',
+        password: 'hehehe',
+        age: 42,
+        isDeleted: false
+    } as User)
+];
+
+export const getUserById = (idToFind: string) : User | undefined => {
     return users.find(({ id }) => id === idToFind);
 };
 
-const findIndexById = (idToSearch) => users.findIndex(({ id }) => id === idToSearch);
+const findIndexById = (idToSearch: string) => users.findIndex(({ id }) => id === idToSearch);
 
-export const updateOrCreateUser = (user) => {
+export const updateOrCreateUser = (user: User): void => {
     const existingUserIndex = findIndexById(user.id);
     if (existingUserIndex === -1) {
-        users.push(user);not
+        users.push(user);
     } else {
         users[existingUserIndex] = user;
     }
 };
 
-export const deleteUser = (idToDelete) => {
+export const deleteUser = (idToDelete: string): void => {
     const existingUserIndex = findIndexById(idToDelete);
     if (!existingUserIndex) throw new Error('id does not exist');
     users[existingUserIndex].isDeleted = true;
 };
 
-export const getAutoSuggestUsers = (loginSubstring, limit) => {
+export const getAutoSuggestUsers = (loginSubstring: string, limit: number): User[] => {
     let numberOfFound = 0;
     const foundUsers = [];
 

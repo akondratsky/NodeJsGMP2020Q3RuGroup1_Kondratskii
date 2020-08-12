@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getUserById, updateOrCreateUser, deleteUser, getAutoSuggestUsers } from './service';
+import { getUserById, updateOrCreateUser, deleteUser, getAutoSuggestUsers } from './usersService';
 
 const router = Router();
 
@@ -10,8 +10,8 @@ router.get('/:id', (req, res) => {
 });
 
 router.get('/', (req, res) => {
-    const loginSubstring = req.query.search;
-    const limit = req.query.limit;
+    const loginSubstring: string = <string> req.query.search;
+    const limit: number = +(<string>req.query.limit) || 0;
     res.json(
         getAutoSuggestUsers(loginSubstring, limit)
     );
