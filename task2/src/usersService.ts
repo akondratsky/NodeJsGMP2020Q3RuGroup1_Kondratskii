@@ -1,46 +1,54 @@
-interface User {
-    id: string,
-    login: string,
-    password: string,
-    age: number,
-    isDeleted: boolean
+import { User } from './schemas';
+import { createFakeData } from './createFakeData';
+import { logger } from './logger';
+
+
+const users: User[] = createFakeData(42);
+
+const findUserIndexById = (idToSearch: string) => {
+    return users.findIndex(({ id }) => id === idToSearch);
 }
 
-const users: User[] = [
-    ({
-        id: '42',
-        login: 'mooglass_domas',
-        password: 'hehehe',
-        age: 42,
-        isDeleted: false
-    } as User)
-];
 
 export const getUserById = (idToFind: string) : User | undefined => {
-    return users.find(({ id }) => id === idToFind);
-};
-
-const findIndexById = (idToSearch: string) => users.findIndex(({ id }) => id === idToSearch);
-
-export const updateOrCreateUser = (user: User): void => {
-    const existingUserIndex = findIndexById(user.id);
-    if (existingUserIndex === -1) {
-        users.push(user);
+    const user = users.find(({ id }) => id === idToFind);
+    if (user) {
+        logger.info(`User found by ID=${idToFind}`);
     } else {
-        users[existingUserIndex] = user;
+        logger.error(`User with ID does not exist, ID=${idToFind}`);
     }
+    return user;
 };
 
-export const deleteUser = (idToDelete: string): void => {
-    const existingUserIndex = findIndexById(idToDelete);
-    if (!existingUserIndex) throw new Error('id does not exist');
-    users[existingUserIndex].isDeleted = true;
+
+export const updateOrCreateUser = (user: User): string | null => {
+    const index = findUserIndexById(user.id);
+
+    if (~index) {
+        users[index] = { ...user };
+        logger.info(`User successfully updated, ID=${user.id}`);
+        return user.id;
+    }
+
+    users.push(user);
+    logger.info(`Successfully created new user with ID=${user.id}`)
+    return user.id;
+};
+
+
+export const deleteUser = (userId: string): void => {
+    const userIndex = findUserIndexById(userId);
+    if (~userIndex) {
+        users[userIndex].isDeleted = true;
+        logger.info(`User marked as deleted: ${userId}`);
+    } else {
+        logger.error(`User ID does not exist: ${userId}`)
+    }
 };
 
 export const getAutoSuggestUsers = (loginSubstring: string, limit: number): User[] => {
     let numberOfFound = 0;
     const foundUsers = [];
-
     for (let i = 0; i < users.length; i++) {
         if (numberOfFound >= limit) break;
         if (users[i].login.includes(loginSubstring)) {
@@ -48,6 +56,6 @@ export const getAutoSuggestUsers = (loginSubstring: string, limit: number): User
             numberOfFound++;
         }
     }
-
+    logger.info(`Found ${numberOfFound} users, limit: ${limit}, search: ${loginSubstring}`);
     return foundUsers;
 };

@@ -1,5 +1,11 @@
 import { Router } from 'express';
-import { getUserById, updateOrCreateUser, deleteUser, getAutoSuggestUsers } from './usersService';
+import { logger } from './logger';
+import {
+    getUserById,
+    updateOrCreateUser,
+    deleteUser,
+    getAutoSuggestUsers
+} from './usersService';
 
 const router = Router();
 
@@ -18,12 +24,21 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    updateOrCreateUser(req.body);
+    const user = req.body;
+    logger.info(`Updating/creating user: ${JSON.stringify(user)}`);
+    const userId = updateOrCreateUser(req.body);
+    if (userId) {
+        res.send({ id: userId });
+    } else {
+        res.status(404);
+    }
     res.end();
 });
 
 router.delete('/', (req, res) => {
-    deleteUser(req.body.id);
+    const userId = req.body.id;
+    logger.info(`Deleting user with ID=${userId}`);
+    deleteUser(userId);
     res.end();
 });
 
