@@ -46,12 +46,13 @@ export const deleteUser = (userId: string): void => {
     }
 };
 
-export const getAutoSuggestUsers = (loginSubstring: string, limit: number): User[] => {
+export const getAutoSuggestUsers = (loginSubstring: string, limit: number | null): User[] => {
     let numberOfFound = 0;
     const foundUsers = [];
+    const isEmpty = loginSubstring.length === 0;
     for (let i = 0; i < users.length; i++) {
-        if (numberOfFound >= limit) break;
-        if (users[i].login.includes(loginSubstring)) {
+        if (limit !== null && numberOfFound >= limit) break;
+        if (isEmpty || users[i].login.includes(loginSubstring)) {
             foundUsers.push(users[i]);
             numberOfFound++;
         }
