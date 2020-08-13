@@ -12,7 +12,15 @@ const getRandomFrom = (array: Array<string | number>): string | number => {
 
 export const createFakeData = (number: number): User[] => {
     const users = [];
-    for (let i = 0; i < number; i++) {
+    users.push({
+        id: 'e7fddbd6-b49b-45d3-9843-c070b0e52acc',
+        login: 'admin',
+        password: 'admin',
+        age: 15,
+        isDeleted: false
+    } as User);
+
+    for (let i = 0; i < number - 1; i++) {
         users.push({
             id: uuid(),
             login: getRandomFrom(names) + getRandomFrom(ages).toString(),
