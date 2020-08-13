@@ -7,7 +7,7 @@ const users: User[] = createFakeData(42);
 
 const findUserIndexById = (idToSearch: string) => {
     return users.findIndex(({ id }) => id === idToSearch);
-}
+};
 
 
 export const getUserById = (idToFind: string) : User | undefined => {
@@ -24,25 +24,25 @@ export const getUserById = (idToFind: string) : User | undefined => {
 export const updateOrCreateUser = (user: User): string | null => {
     const index = findUserIndexById(user.id);
 
-    if (~index) {
+    if (index > -1) {
         users[index] = { ...user };
         logger.info(`User successfully updated, ID=${user.id}`);
         return user.id;
     }
 
     users.push(user);
-    logger.info(`Successfully created new user with ID=${user.id}`)
+    logger.info(`Successfully created new user with ID=${user.id}`);
     return user.id;
 };
 
 
 export const deleteUser = (userId: string): void => {
     const userIndex = findUserIndexById(userId);
-    if (~userIndex) {
+    if (userIndex > -1) {
         users[userIndex].isDeleted = true;
         logger.info(`User marked as deleted: ${userId}`);
     } else {
-        logger.error(`User ID does not exist: ${userId}`)
+        logger.error(`User ID does not exist: ${userId}`);
     }
 };
 

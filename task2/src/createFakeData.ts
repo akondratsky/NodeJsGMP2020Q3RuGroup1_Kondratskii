@@ -19,7 +19,7 @@ export const createFakeData = (number: number): User[] => {
             password: getRandomFrom(passwords),
             age: getRandomFrom(ages),
             isDeleted: false
-        } as User)
+        } as User);
     }
     return users;
-}
+};
