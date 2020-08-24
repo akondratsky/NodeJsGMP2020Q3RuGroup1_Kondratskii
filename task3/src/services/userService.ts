@@ -1,68 +1,39 @@
-import { logger } from 'app/services/logger';
+import { loggerService } from 'app/services/loggerService';
 import { userProvider } from 'app/dataAccess';
-import { User } from 'app/models';
+import { User, UserAttributes } from 'app/models';
 
-// const users: User[] = createFakeData(42);
-
-// const findUserIndexById = async (idToSearch: string) => {
-//     const foundUsers = await UserModel.findAll({
-//         where: {
-//             id: idToSearch
-//         }
-//     });
-//     return foundUsers.length ? foundUsers[0] : null;
-// };
-
-
-export const getUserById = async (idToFind: string) : Promise<User | null> => {
-    const user = await userProvider.getById(idToFind);
+export const getById = async (id: string) : Promise<User | null> => {
+    const user = await userProvider.getById(id);
 
     if (user) {
-        logger.info(`User found by ID=${idToFind}`);
+        loggerService.info(`User found by ID=${id}`);
     } else {
-        logger.error(`User with ID does not exist, ID=${idToFind}`);
+        loggerService.error(`User with ID does not exist, ID=${id}`);
     }
 
     return user;
 };
 
+export const getAutoSuggest = async (loginSubstring: string, limit: number | null): Promise<User[]> => {
+    const users = await userProvider.find(loginSubstring, limit);
+    loggerService.info(`Found ${users.length} users, limit: ${limit}, search: "${loginSubstring}"`);
+    return users;
+};
 
-// export const updateOrCreateUser = async (user: User): Promise<string | null> => {
-//     const index = await findUserIndexById(user.id);
+export const updateOrCreate = async (user: UserAttributes): Promise<string> => {
+    loggerService.info(`Updating/creating user: ${JSON.stringify(user)}`);
+    const id = userProvider.updateOrCreate(user);
+    loggerService.info(`User successfully created/updated, ID=${id}`);
+    return id;
+};
 
-//     if (index > -1) {
-//         users[index] = { ...user };
-//         logger.info(`User successfully updated, ID=${user.id}`);
-//         return user.id;
-//     }
-
-//     users.push(user);
-//     logger.info(`Successfully created new user with ID=${user.id}`);
-//     return user.id;
-// };
-
-
-// export const deleteUser = (userId: string): void => {
-//     const userIndex = findUserIndexById(userId);
-//     if (userIndex > -1) {
-//         users[userIndex].isDeleted = true;
-//         logger.info(`User marked as deleted: ${userId}`);
-//     } else {
-//         logger.error(`User ID does not exist: ${userId}`);
-//     }
-// };
-
-// export const getAutoSuggestUsers = (loginSubstring: string, limit: number | null): User[] => {
-//     let numberOfFound = 0;
-//     const foundUsers = [];
-//     const isEmpty = loginSubstring.length === 0;
-//     for (let i = 0; i < users.length; i++) {
-//         if (limit !== null && numberOfFound >= limit) break;
-//         if (isEmpty || users[i].login.includes(loginSubstring)) {
-//             foundUsers.push(users[i]);
-//             numberOfFound++;
-//         }
-//     }
-//     logger.info(`Found ${numberOfFound} users, limit: ${limit}, search: ${loginSubstring}`);
-//     return foundUsers;
-// };
+export const softDelete = async (id: string): Promise<boolean> => {
+    loggerService.info(`Deleting user with ID=${id}`);
+    const isDeleted = userProvider.softDelete(id);
+    if (isDeleted) {
+        loggerService.info(`Successfully deleted user ${id}`);
+    } else {
+        loggerService.error(`User not found ${id}`);
+    }
+    return isDeleted;
+};

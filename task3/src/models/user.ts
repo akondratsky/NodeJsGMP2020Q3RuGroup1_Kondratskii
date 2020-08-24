@@ -1,9 +1,20 @@
-import { DataTypes } from 'sequelize';
+import { DataTypes, Model } from 'sequelize';
 import { sequelize } from './connection';
 
-export const User = sequelize.define('User', {
+export interface UserAttributes {
+    id: string,
+    login: string,
+    password: string,
+    age?: number,
+    isDeleted: boolean
+}
+
+export class User extends Model<UserAttributes> {}
+
+User.init({
     id: {
         type: DataTypes.UUID,
+        allowNull: false,
         primaryKey: true
     },
     login: {
@@ -24,5 +35,6 @@ export const User = sequelize.define('User', {
     }
 }, {
     tableName: 'Users',
-    timestamps: false
+    timestamps: false,
+    sequelize
 });

@@ -1,1 +1,1 @@
-export { init } from './main';
+export { init } from './init';
