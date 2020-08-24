@@ -4,9 +4,9 @@
   "description": "",
   "main": "task1-1.js",
   "scripts": {
-    "task1": "nodemon ./src/task1-1.js",
-    "task2": "nodemon ./src/task1-2/index.js",
-    "task3": "nodemon --exec babel-node ./src/task1-3/index.js"
+    "task1-1": "nodemon ./src/task1-1.js",
+    "task1-2": "nodemon ./src/task1-2/index.js",
+    "task1-3": "nodemon --exec babel-node ./src/task1-3/index.js"
   },
   "author": "",
   "license": "ISC",
