@@ -1,16 +1,16 @@
-CREATE TABLE users (
-    id UUID PRIMARY KEY,
-    login varchar(255) NOT NULL,
-    password varchar(255) NOT NULL,
-    age smallint,
-    isdeleted boolean NOT NULL DEFAULT FALSE
+CREATE TABLE "Users" (
+    "id" UUID PRIMARY KEY,
+    "login" varchar(255) NOT NULL,
+    "password" varchar(255) NOT NULL,
+    "age" smallint,
+    "isDeleted" boolean NOT NULL DEFAULT FALSE
 );
 
-INSERT INTO public.users (
-    id, login, password, age
+INSERT INTO "Users" (
+    "id", "login", "password", "age"
 ) VALUES
     (
-        'a0eebc99-9c0b4ef8-bb6d6bb9-bd380a11',
+        '00011958-6022-4366-8f4e-f4eb0645434d',
         'admin',
         'qwerty',
         15

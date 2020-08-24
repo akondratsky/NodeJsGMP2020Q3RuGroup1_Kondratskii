@@ -4,7 +4,8 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "start": "tsc && node ./dst/main.js",
+    "start": "ef-tspm && node ./dst/main.js",
+    "build": "ef-tspm",
     "dev": "nodemon",
     "lint": "eslint . --ext .ts"
   },
@@ -19,18 +20,20 @@
     "express": "4.17.1",
     "express-joi-validation": "4.0.4-beta.0",
     "module-alias": "2.2.2",
+    "pg": "8.3.2",
+    "pg-hstore": "2.3.3",
+    "sequelize": "6.3.4",
     "typescript": "^3.9.7",
     "uuid": "8.3.0",
     "winston": "3.3.3"
   },
   "devDependencies": {
+    "@ef-carbon/tspm": "2.2.5",
     "@typescript-eslint/eslint-plugin": "^3.9.0",
     "@typescript-eslint/parser": "^3.9.0",
     "eslint": "7.6.0",
     "nodemon": "2.0.4",
-    "ts-node": "8.10.2"
-  },
-  "_moduleAliases": {
-    "app": "dst"
+    "ts-node": "8.10.2",
+    "tsconfig-paths": "3.9.0"
   }
 }

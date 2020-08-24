@@ -1,4 +1,4 @@
-import { User } from 'app/models';
+import { User } from 'app/types';
 import { v4 as uuid } from 'uuid';
 
 const names: string[] = ['aleksandr', 'petr', 'ivan', 'aleksei'];
