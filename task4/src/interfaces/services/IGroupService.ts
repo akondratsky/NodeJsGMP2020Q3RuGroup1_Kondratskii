@@ -9,5 +9,5 @@ export type IGroupService = {
 
     update(group: UpdateGroupViewModel): Promise<UUID>;
 
-    delete(id: UUID): Promise<boolean>;
+    delete(id: UUID): Promise<void>;
 }

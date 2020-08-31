@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify';
 import { IGroupController, IGroupService } from 'app/interfaces';
-import { Group, UUID } from 'app/types';
+import { Group, UUID, CreateGroupViewModel, UpdateGroupViewModel } from 'app/types';
 import { INJECTABLES } from 'app/types';
 import { Request, Response } from 'express';
 
@@ -22,18 +22,20 @@ export class GroupContoller implements IGroupController {
         );
     }
 
-    public async create(): Promise<Response<UUID>> {
-        await Promise.resolve();
-        throw new Error('Method not implemented.');
+    public async create(req: Request, res: Response): Promise<Response<UUID>> {
+        return res.json(
+            await this.groupService.create(req.body as CreateGroupViewModel)
+        );
     }
 
-    public async update(): Promise<Response<UUID>> {
-        await Promise.resolve();
-        throw new Error('Method not implemented.');
+    public async update(req: Request, res: Response): Promise<Response<UUID>> {
+        return res.json(
+            await this.groupService.update(req.body as UpdateGroupViewModel)
+        );
     }
 
-    public async delete(): Promise<void> {
-        await Promise.resolve();
-        throw new Error('Method not implemented.');
+    public async delete(req: Request, res: Response): Promise<void> {
+        await this.groupService.delete(req.query.id as string);
+        res.end();
     }
 }

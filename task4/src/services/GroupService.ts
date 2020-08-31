@@ -2,7 +2,7 @@ import { injectable, inject } from 'inversify';
 import { ValidationError } from '@hapi/joi';
 import { IGroupService, IGroupProvider } from 'app/interfaces';
 import { Group, UUID, UpdateGroupViewModel, CreateGroupViewModel, INJECTABLES } from 'app/types';
-import { guidSchema } from './validation';
+import { guidSchema, createGroupSchema, updateGroupSchema } from './validation';
 
 
 const assertValidation = (error: ValidationError | undefined, msg: string) : void => {
@@ -36,18 +36,20 @@ export class GroupService implements IGroupService {
         return await this.groupProvider.getAll();
     }
 
-    create(group: CreateGroupViewModel): Promise<string> {
-        console.log('create', group);
-        throw new Error('Method not implemented.');
+    async create(group: CreateGroupViewModel): Promise<string> {
+        const { error } = createGroupSchema.validate(group);
+        assertValidation(error, 'Incorrect fields');
+        return await this.groupProvider.create(group);
     }
 
-    update(group: UpdateGroupViewModel): Promise<UUID> {
-        console.log('update', group);
-        throw new Error('Method not implemented.');
+    async update(group: UpdateGroupViewModel): Promise<UUID> {
+        const { error } = updateGroupSchema.validate(group);
+        assertValidation(error, 'Incorrect fields');
+        return await this.groupProvider.update(group);
     }
 
-    delete(id: UUID): Promise<boolean> {
-        console.log('delete', id);
-        throw new Error('Method not implemented.');
+    async delete(id: UUID): Promise<void> {
+        validateId(id);
+        return await this.groupProvider.delete(id);
     }
 }

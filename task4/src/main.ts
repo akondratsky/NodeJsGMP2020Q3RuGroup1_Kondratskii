@@ -5,10 +5,10 @@ import { appContainer } from 'app/loaders';
 import { IMentoringApp } from 'app/interfaces';
 import { INJECTABLES } from './types';
 
-const startApplication = () => {
+const startApplication = async () => {
     const expressApplication: Application = express();
 
-    appContainer
+    await appContainer
         .get<IMentoringApp>(INJECTABLES.MentoringApp)
         .init(expressApplication);
 
