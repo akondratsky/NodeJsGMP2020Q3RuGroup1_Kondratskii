@@ -9,7 +9,7 @@ export class GroupContoller implements IGroupController {
     private groupService: IGroupService;
 
     public constructor(
-        @inject(INJECTABLES.IGroupService) groupService: IGroupService
+        @inject(INJECTABLES.GroupService) groupService: IGroupService
     ) {
         this.groupService = groupService;
     }

@@ -5,11 +5,11 @@ import { appContainer } from 'app/loaders';
 import { IMentoringApp } from 'app/interfaces';
 import { INJECTABLES } from './types';
 
-const startApplication = async () => {
+const startApplication = () => {
     const expressApplication: Application = express();
 
     appContainer
-        .get<IMentoringApp>(INJECTABLES.IMentoringApp)
+        .get<IMentoringApp>(INJECTABLES.MentoringApp)
         .init(expressApplication);
 
     const port = argv.PORT || DEFAULT_PORT;

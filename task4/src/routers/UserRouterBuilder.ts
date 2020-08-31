@@ -1,14 +1,14 @@
-import { IUserRouter, IUserController } from 'app/interfaces';
+import { IRouterBuilder, IUserController } from 'app/interfaces';
 import { injectable, inject } from 'inversify';
 import { INJECTABLES } from 'app/types';
 import { Router, NextFunction, Response, Request } from 'express';
 
 @injectable()
-export class UserRouter implements IUserRouter {
+export class UserRouterBuilder implements IRouterBuilder {
     private userController: IUserController;
 
     constructor(
-        @inject(INJECTABLES.IUserController) userController: IUserController
+        @inject(INJECTABLES.UserController) userController: IUserController
     ) {
         this.userController = userController;
     }

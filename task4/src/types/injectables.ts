@@ -1,19 +1,19 @@
 export const INJECTABLES = {
     // global
-    IMentoringApp: Symbol.for('IMentoringApp'),
+    MentoringApp: Symbol.for('MentoringApp'),
     // user:
-    IUserRouter: Symbol.for('IUserRouter'),
-    IUserController: Symbol.for('IUserController'),
-    IUserService: Symbol.for('IUserService'),
-    IUserProvider: Symbol.for('IUserProvider'),
+    UserRouterBuilder: Symbol.for('UserRouterBuilder'),
+    UserController: Symbol.for('UserController'),
+    UserService: Symbol.for('UserService'),
+    UserProvider: Symbol.for('UserProvider'),
     // group:
-    IGroupRouter: Symbol.for('IGroupRouter'),
-    IGroupController: Symbol.for('IGroupController'),
-    IGroupService: Symbol.for('IGroupService'),
-    IGroupProvider: Symbol.for('IGroupProvider'),
+    GroupRouterBuilder: Symbol.for('GroupRouterBuilder'),
+    GroupController: Symbol.for('GroupController'),
+    GroupService: Symbol.for('GroupService'),
+    GroupProvider: Symbol.for('GroupProvider'),
     // permissions:
-    IPermissionRouter: Symbol.for('IPermissionRouter'),
-    IPermissionController: Symbol.for('IPermissionController'),
-    IPermissionService: Symbol.for('IPermissionService'),
-    IPermissionProvider: Symbol.for('IPermissionProvider')
+    PermissionRouterBuilder: Symbol.for('PermissionRouterBuilder'),
+    PermissionController: Symbol.for('PermissionController'),
+    PermissionService: Symbol.for('PermissionService'),
+    PermissionProvider: Symbol.for('PermissionProvider')
 };

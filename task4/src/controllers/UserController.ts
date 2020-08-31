@@ -9,7 +9,7 @@ export class UserController implements IUserController {
     private userService: IUserService;
 
     public constructor(
-        @inject(INJECTABLES.IUserService) userService: IUserService
+        @inject(INJECTABLES.UserService) userService: IUserService
     ) {
         this.userService = userService;
     }

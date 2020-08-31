@@ -1,18 +1,18 @@
-import { IMentoringApp, IUserRouter, IGroupRouter, IPermissionRouter } from 'app/interfaces';
+import { IMentoringApp, IRouterBuilder } from 'app/interfaces';
 import express, { Application } from 'express';
 import { injectable, inject } from 'inversify';
 import { INJECTABLES } from 'app/types';
 
 @injectable()
 export class MentoringApp implements IMentoringApp {
-    private userRouter: IUserRouter;
-    private groupRouter: IGroupRouter;
-    private permissionRouter: IPermissionRouter;
+    private userRouter: IRouterBuilder;
+    private groupRouter: IRouterBuilder;
+    private permissionRouter: IRouterBuilder;
 
     constructor(
-        @inject(INJECTABLES.IUserRouter) userRouter: IUserRouter,
-        @inject(INJECTABLES.IGroupRouter) groupRouter: IGroupRouter,
-        @inject(INJECTABLES.IPermissionRouter) permissionRouter: IPermissionRouter
+        @inject(INJECTABLES.UserRouterBuilder) userRouter: IRouterBuilder,
+        @inject(INJECTABLES.GroupRouterBuilder) groupRouter: IRouterBuilder,
+        @inject(INJECTABLES.PermissionRouterBuilder) permissionRouter: IRouterBuilder
     ) {
         this.userRouter = userRouter;
         this.groupRouter = groupRouter;

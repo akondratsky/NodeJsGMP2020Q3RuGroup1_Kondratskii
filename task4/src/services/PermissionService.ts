@@ -22,7 +22,7 @@ export class PermissionService implements IPermissionService {
     private permissionProvider: IPermissionProvider
 
     constructor(
-        @inject(INJECTABLES.IPermissionProvider) permissionProvider: IPermissionProvider
+        @inject(INJECTABLES.PermissionProvider) permissionProvider: IPermissionProvider
     ) {
         this.permissionProvider = permissionProvider;
     }

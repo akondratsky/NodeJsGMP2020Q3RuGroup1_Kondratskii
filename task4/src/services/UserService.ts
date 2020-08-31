@@ -21,7 +21,7 @@ export class UserService implements IUserService {
     private userProvider: IUserProvider;
 
     constructor(
-        @inject(INJECTABLES.IUserProvider) userProvider: IUserProvider
+        @inject(INJECTABLES.UserProvider) userProvider: IUserProvider
     ) {
         this.userProvider = userProvider;
     }

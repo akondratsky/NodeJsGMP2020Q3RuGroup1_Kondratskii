@@ -1,5 +1,5 @@
 import { Router } from 'express';
 
-interface IRouter {
+export interface IRouterBuilder {
     create(baseUrl: string): Router
 }

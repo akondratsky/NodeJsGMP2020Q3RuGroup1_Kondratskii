@@ -1,14 +1,14 @@
 import { injectable, inject } from 'inversify';
 import { INJECTABLES } from 'app/types';
 import { Router, NextFunction, Response, Request } from 'express';
-import { IPermissionRouter, IPermissionController } from 'app/interfaces';
+import { IRouterBuilder, IPermissionController } from 'app/interfaces';
 
 @injectable()
-export class PermissionRouter implements IPermissionRouter {
+export class PermissionRouterBuilder implements IRouterBuilder {
     private permissionController: IPermissionController;
 
     constructor(
-        @inject(INJECTABLES.IPermissionController) permissionController: IPermissionController
+        @inject(INJECTABLES.PermissionController) permissionController: IPermissionController
     ) {
         this.permissionController = permissionController;
     }

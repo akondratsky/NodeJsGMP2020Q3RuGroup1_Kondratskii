@@ -1,14 +1,14 @@
 import { injectable, inject } from 'inversify';
 import { Router, Request, Response, NextFunction } from 'express';
-import { IGroupRouter, IGroupController } from 'app/interfaces';
+import { IRouterBuilder, IGroupController } from 'app/interfaces';
 import { INJECTABLES } from 'app/types';
 
 @injectable()
-export class GroupRouter implements IGroupRouter {
+export class GroupRouter implements IRouterBuilder {
     private groupController: IGroupController;
 
     constructor(
-        @inject(INJECTABLES.IGroupController) groupController: IGroupController
+        @inject(INJECTABLES.GroupController) groupController: IGroupController
     ) {
         this.groupController = groupController;
     }

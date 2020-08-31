@@ -8,7 +8,7 @@ export class PermissionController implements IPermissionController {
     private permissionService: IPermissionService;
 
     public constructor(
-        @inject(INJECTABLES.IPermissionService) permissionService: IPermissionService
+        @inject(INJECTABLES.PermissionService) permissionService: IPermissionService
     ) {
         this.permissionService = permissionService;
     }

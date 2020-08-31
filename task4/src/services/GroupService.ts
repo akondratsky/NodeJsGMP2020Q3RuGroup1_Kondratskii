@@ -22,7 +22,7 @@ export class GroupService implements IGroupService {
     private groupProvider: IGroupProvider
 
     constructor(
-        @inject(INJECTABLES.IGroupProvider) groupProvider: IGroupProvider
+        @inject(INJECTABLES.GroupProvider) groupProvider: IGroupProvider
     ) {
         this.groupProvider = groupProvider;
     }

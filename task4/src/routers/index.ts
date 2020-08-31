@@ -1,3 +1,3 @@
-export * from './UserRouter';
-export * from './GroupRouter';
-export * from './PermissionRouter';
+export * from './UserRouterBuilder';
+export * from './GroupRouterBuilder';
+export * from './PermissionRouterBuilder';
