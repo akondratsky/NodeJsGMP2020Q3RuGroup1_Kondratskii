@@ -15,16 +15,16 @@ export class GroupRouter implements IRouterBuilder {
 
     create(baseUrl: string) : Router {
         return Router()
-            .get(baseUrl, async (req: Request, res: Response, next: NextFunction) => {
+            .get(baseUrl, (req: Request, res: Response, next: NextFunction): void => {
                 this.groupController.get(req, res, next);
             })
-            .post(baseUrl, async (req: Request, res: Response, next: NextFunction) => {
+            .post(baseUrl, (req: Request, res: Response, next: NextFunction): void => {
                 this.groupController.create(req, res, next);
             })
-            .patch(baseUrl, async (req: Request, res: Response, next: NextFunction) => {
+            .patch(baseUrl, (req: Request, res: Response, next: NextFunction): void => {
                 this.groupController.update(req, res, next);
             })
-            .delete(baseUrl, async (req: Request, res: Response, next: NextFunction) => {
+            .delete(baseUrl, (req: Request, res: Response, next: NextFunction): void => {
                 this.groupController.delete(req, res, next);
             });
     }

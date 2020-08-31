@@ -5,6 +5,8 @@ import { Group, UUID, UpdateGroupViewModel, CreateGroupViewModel, INJECTABLES } 
 import { guidSchema, createGroupSchema, updateGroupSchema } from './validation';
 
 
+// TODO: remove duplicated code in scope of creating of error handler
+
 const assertValidation = (error: ValidationError | undefined, msg: string) : void => {
     if (error) {
         throw new ValidationError(msg, null, null);
