@@ -15,7 +15,7 @@ export const appContainer = new Container();
 
 
 appContainer.bind<Interfaces.IMentoringApp>(INJECTABLES.MentoringApp).to(MentoringApp);
-
+appContainer.bind<Interfaces.IRouterBuilder>(INJECTABLES.RootRouterBuilder).to(Routers.RootRouterBuilder);
 // user
 appContainer.bind<Interfaces.IUserController>(INJECTABLES.UserController).to(Controllers.UserController);
 appContainer.bind<Interfaces.IRouterBuilder>(INJECTABLES.UserRouterBuilder).to(Routers.UserRouterBuilder);

@@ -6,13 +6,9 @@ import { Request, Response } from 'express';
 
 @injectable()
 export class UserController implements IUserController {
-    private userService: IUserService;
-
     public constructor(
-        @inject(INJECTABLES.UserService) userService: IUserService
-    ) {
-        this.userService = userService;
-    }
+        @inject(INJECTABLES.UserService) private userService: IUserService
+    ) {}
 
     public async get(req: Request, res: Response): Promise<Response<UserModelView>> {
         if (req.query.id) {

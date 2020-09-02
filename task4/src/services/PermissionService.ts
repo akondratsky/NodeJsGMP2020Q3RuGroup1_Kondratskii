@@ -19,13 +19,9 @@ const validateId = (id: UUID): void => {
 
 @injectable()
 export class PermissionService implements IPermissionService {
-    private permissionProvider: IPermissionProvider
-
     constructor(
-        @inject(INJECTABLES.PermissionProvider) permissionProvider: IPermissionProvider
-    ) {
-        this.permissionProvider = permissionProvider;
-    }
+        @inject(INJECTABLES.PermissionProvider) private permissionProvider: IPermissionProvider
+    ) {}
 
     async addUsersToGroup(groupId: UUID, userIds: Array<UUID>): Promise<number> {
         [groupId, ...userIds].forEach(id => validateId(id));

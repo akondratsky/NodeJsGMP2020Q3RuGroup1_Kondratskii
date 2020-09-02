@@ -5,13 +5,9 @@ import { INJECTABLES } from 'app/types';
 
 @injectable()
 export class GroupRouter implements IRouterBuilder {
-    private groupController: IGroupController;
-
     constructor(
-        @inject(INJECTABLES.GroupController) groupController: IGroupController
-    ) {
-        this.groupController = groupController;
-    }
+        @inject(INJECTABLES.GroupController) private groupController: IGroupController
+    ) {}
 
     create(baseUrl: string) : Router {
         return Router()

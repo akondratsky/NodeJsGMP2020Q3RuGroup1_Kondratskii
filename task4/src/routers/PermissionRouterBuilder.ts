@@ -5,13 +5,9 @@ import { IRouterBuilder, IPermissionController } from 'app/interfaces';
 
 @injectable()
 export class PermissionRouterBuilder implements IRouterBuilder {
-    private permissionController: IPermissionController;
-
     constructor(
-        @inject(INJECTABLES.PermissionController) permissionController: IPermissionController
-    ) {
-        this.permissionController = permissionController;
-    }
+        @inject(INJECTABLES.PermissionController) private permissionController: IPermissionController
+    ) {}
 
     create(baseUrl: string) : Router {
         return Router()

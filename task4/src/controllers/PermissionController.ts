@@ -5,13 +5,9 @@ import { Request, Response } from 'express';
 
 @injectable()
 export class PermissionController implements IPermissionController {
-    private permissionService: IPermissionService;
-
     public constructor(
-        @inject(INJECTABLES.PermissionService) permissionService: IPermissionService
-    ) {
-        this.permissionService = permissionService;
-    }
+        @inject(INJECTABLES.PermissionService) private permissionService: IPermissionService
+    ) {}
 
     public async addUsersToGroup(req: Request, res: Response): Promise<Response<number>> {
         const groupId = req.body.groupId as UUID;

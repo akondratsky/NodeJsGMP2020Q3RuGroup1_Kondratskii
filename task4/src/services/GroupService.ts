@@ -21,13 +21,9 @@ const validateId = (id: UUID): void => {
 
 @injectable()
 export class GroupService implements IGroupService {
-    private groupProvider: IGroupProvider
-
     constructor(
-        @inject(INJECTABLES.GroupProvider) groupProvider: IGroupProvider
-    ) {
-        this.groupProvider = groupProvider;
-    }
+        @inject(INJECTABLES.GroupProvider) private groupProvider: IGroupProvider
+    ) {}
 
     async getById(id: UUID): Promise<Group> {
         validateId(id);

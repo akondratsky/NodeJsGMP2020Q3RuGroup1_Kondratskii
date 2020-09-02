@@ -5,13 +5,9 @@ import { Router, NextFunction, Response, Request } from 'express';
 
 @injectable()
 export class UserRouterBuilder implements IRouterBuilder {
-    private userController: IUserController;
-
     constructor(
-        @inject(INJECTABLES.UserController) userController: IUserController
-    ) {
-        this.userController = userController;
-    }
+        @inject(INJECTABLES.UserController) private userController: IUserController
+    ) {}
 
     create(baseUrl: string) : Router {
         return Router()

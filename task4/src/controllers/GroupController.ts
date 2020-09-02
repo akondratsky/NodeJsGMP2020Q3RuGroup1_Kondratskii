@@ -6,13 +6,9 @@ import { Request, Response } from 'express';
 
 @injectable()
 export class GroupContoller implements IGroupController {
-    private groupService: IGroupService;
-
     public constructor(
-        @inject(INJECTABLES.GroupService) groupService: IGroupService
-    ) {
-        this.groupService = groupService;
-    }
+        @inject(INJECTABLES.GroupService) private groupService: IGroupService
+    ) {}
 
     public async get(req: Request, res: Response): Promise<Response<Group | Array<Group>>> {
         return res.json(

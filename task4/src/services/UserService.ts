@@ -18,13 +18,9 @@ const validateId = (id: UUID): void => {
 
 @injectable()
 export class UserService implements IUserService {
-    private userProvider: IUserProvider;
-
     constructor(
-        @inject(INJECTABLES.UserProvider) userProvider: IUserProvider
-    ) {
-        this.userProvider = userProvider;
-    }
+        @inject(INJECTABLES.UserProvider) private userProvider: IUserProvider
+    ) {}
 
     async search(loginSubstring: string, limit: number | undefined): Promise<Array<UserModelView>> {
         const { error } = searchUserSchema.validate({ loginSubstring, limit });
