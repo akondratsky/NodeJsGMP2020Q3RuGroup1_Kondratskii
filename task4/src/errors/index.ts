@@ -1,2 +1,1 @@
-export * from './UserNotFoundError';
-export * from './GroupNotFoundError';
+export * from './main';

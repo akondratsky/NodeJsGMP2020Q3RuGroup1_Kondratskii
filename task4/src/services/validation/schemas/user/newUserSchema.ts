@@ -2,10 +2,10 @@ import Joi from '@hapi/joi';
 
 export const newUserSchema = Joi.object({
     login: Joi.string()
-        .optional(),
+        .required(),
     password: Joi.string()
         .alphanum()
-        .optional(),
+        .required(),
     age: Joi.number()
         .min(4)
         .max(130)

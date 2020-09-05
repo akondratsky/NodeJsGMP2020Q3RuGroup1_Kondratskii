@@ -1,17 +1,15 @@
 {
-  "name": "task3",
+  "name": "task4",
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
   "scripts": {
     "start": "npm run build && node ./dst/main.js",
+    "start:builded": "node ./dst/main.js",
     "build": "tsc && ef-tspm",
     "dev": "nodemon",
-    "start-test-instance": "cross-env PORT=3123 npm start",
     "lint": "eslint . --ext .ts",
-    "test:run": "mocha -r ts-node/register tests/**/*.test.ts",
-    "test:run-when-start": "wait-on http://localhost:4000/users --interval 3000 && npm run test:run",
-    "test": "concurrently \"npm start\" \"npm run test:run-when-start\""
+    "db:create": "ts-node -r tsconfig-paths/register ./deploy/setupDatabase.ts"
   },
   "keywords": [],
   "author": "",

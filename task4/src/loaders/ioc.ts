@@ -9,13 +9,16 @@ import * as Controllers from 'app/controllers';
 import * as Providers from 'app/providers';
 
 import { MentoringApp } from './MentoringApp';
+import { ErrorHandlersBuilder } from './ErrorHandlersBuilder';
 
 
 export const appContainer = new Container();
 
 
 appContainer.bind<Interfaces.IMentoringApp>(INJECTABLES.MentoringApp).to(MentoringApp);
+appContainer.bind<Interfaces.IErrorHandlersBuilder>(INJECTABLES.ErrorHandlersBuilder).to(ErrorHandlersBuilder);
 appContainer.bind<Interfaces.IRouterBuilder>(INJECTABLES.RootRouterBuilder).to(Routers.RootRouterBuilder);
+appContainer.bind<Interfaces.ILoggerService>(INJECTABLES.LoggerService).to(Services.LoggerService);
 // user
 appContainer.bind<Interfaces.IUserController>(INJECTABLES.UserController).to(Controllers.UserController);
 appContainer.bind<Interfaces.IRouterBuilder>(INJECTABLES.UserRouterBuilder).to(Routers.UserRouterBuilder);

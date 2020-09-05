@@ -1,16 +1,14 @@
-import 'mocha';
-import { before } from 'mocha';
 import { Client } from 'pg';
 import { readFileSync } from 'fs';
 
 const sql = (fileName: string): string => readFileSync(fileName, 'utf-8');
 
-before(async () => {
+const setupDatabase = async () => {
     const client = new Client({
-        user: 'ewevhcne',
+        user: 'eynuhexy',
         host: 'lallah.db.elephantsql.com',
-        database: 'ewevhcne',
-        password: '66JWBbuRn122Hw7OajJdPp9PqRMal5RX'
+        database: 'eynuhexy',
+        password: 'qcrTBGpF7uIlN1ttErKyMQKX10_xVIoN'
     });
 
     await client.connect();
@@ -19,5 +17,7 @@ before(async () => {
     await client.query(sql('./sql/createGroups.sql'));
     await client.query(sql('./sql/createUserGroups.sql'));
 
-    await Promise.resolve();
-});
+    await client.end();
+};
+
+setupDatabase();

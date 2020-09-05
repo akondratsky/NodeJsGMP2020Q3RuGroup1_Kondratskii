@@ -34,6 +34,18 @@ INSERT INTO "Users" (
     (
         'd2ffd640-5aee-4944-8440-696c829d9cf6',
         'lamia',
-        'nude_sophia',
+        'aaa111222333',
         22
+    ),
+    (
+        'eeeeeeee-5aee-4944-8440-696c829d9cf6',
+        'johny',
+        'JJJJJJJJJ',
+        22
+    ),
+    (
+        '7949c23b-2d27-4681-8753-5929a617332b',
+        'john smith',
+        '980h3qihw3pwhewsa',
+        33
     );
