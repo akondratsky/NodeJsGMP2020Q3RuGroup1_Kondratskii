@@ -1,6 +1,5 @@
 import express, { Application } from 'express';
-import { DEFAULT_PORT } from 'app/config';
-import { argv } from 'yargs';
+import { PORT } from 'app/config';
 import { appContainer } from 'app/loaders';
 import { IMentoringApp } from 'app/interfaces';
 import { INJECTABLES } from './types';
@@ -12,10 +11,8 @@ const startApplication = async () => {
         .get<IMentoringApp>(INJECTABLES.MentoringApp)
         .init(expressApplication);
 
-    const port = argv.PORT || DEFAULT_PORT;
-
-    expressApplication.listen(port, () => {
-        console.log(`App is listening on port ${port}!`);
+    expressApplication.listen(PORT, () => {
+        console.log(`App is listening on port ${PORT}!`);
     });
 };
 

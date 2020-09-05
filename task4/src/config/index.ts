@@ -1,2 +1,2 @@
-export * from './defaults';
+export * from './variables';
 export * from './sequelize';

@@ -15,6 +15,8 @@ END IF;
 END;
 $$;
 
+DROP TABLE IF EXISTS "Groups" CASCADE;
+
 CREATE TABLE "Groups" (
     "id" UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     "name" varchar(255) NOT NULL,

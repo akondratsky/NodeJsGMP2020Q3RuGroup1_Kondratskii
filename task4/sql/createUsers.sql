@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS "Users" CASCADE;
+
 CREATE TABLE "Users" (
     "id" UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     "login" varchar(255) NOT NULL,
