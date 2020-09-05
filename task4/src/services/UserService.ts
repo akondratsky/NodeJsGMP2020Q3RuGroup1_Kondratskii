@@ -8,6 +8,7 @@ import {
     newUserSchema,
     getObjectFromValidationError
 } from './validation';
+import { UserNotFoundError } from 'app/errors';
 
 
 @injectable()
@@ -53,7 +54,7 @@ export class UserService implements IUserService {
     }
 
     async create(user: NewUserModelView): Promise<UUID> {
-        const { error } = newUserSchema.validate(user, { abortEarly: false });
+        const { error } = newUserSchema.validate(user);
 
         if (error) {
             this.loggerService.error(

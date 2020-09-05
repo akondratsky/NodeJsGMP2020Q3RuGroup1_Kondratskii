@@ -1,6 +1,6 @@
-import { injectable } from 'inversify';
-import { IUserProvider } from 'app/interfaces';
-import { User, UpdateUserModelView, UserModelView, NewUserModelView, UUID } from 'app/types';
+import { injectable, inject } from 'inversify';
+import { IUserProvider, ILoggerService } from 'app/interfaces';
+import { User, UpdateUserModelView, UserModelView, NewUserModelView, UUID, INJECTABLES } from 'app/types';
 import { UserModel } from 'app/models';
 import { UserNotFoundError } from 'app/errors';
 import { Op } from 'sequelize';
@@ -21,6 +21,10 @@ const flattenUser = (model: UserModel): User => {
 
 @injectable()
 export class UserProvider implements IUserProvider {
+    constructor(
+        @inject(INJECTABLES.LoggerService) private loggerService: ILoggerService
+    ) {}
+
     async search(loginSubstring: string, limit: number | undefined): Promise<Array<UserModelView>> {
         const foundUsers = await UserModel.findAll({
             where: {
@@ -43,6 +47,7 @@ export class UserProvider implements IUserProvider {
         });
 
         if (!user) {
+            this.loggerService.error('User was not found to GET', id);
             throw new UserNotFoundError(id);
         }
 
@@ -65,9 +70,12 @@ export class UserProvider implements IUserProvider {
         const [numberOfUpdated] = await UserModel.update(user, {
             where: { id: user.id }
         });
+
         if (numberOfUpdated !== 1) {
+            this.loggerService.error('User was not found to UPDATE', user);
             throw new UserNotFoundError(user.id);
         }
+
         return user.id;
     }
 
@@ -75,7 +83,9 @@ export class UserProvider implements IUserProvider {
         const numberOfDeleted = await UserModel.destroy({
             where: { id }
         });
+
         if (numberOfDeleted !== 1) {
+            this.loggerService.error('User was not found to DELETE', id);
             throw new UserNotFoundError(id);
         }
     }

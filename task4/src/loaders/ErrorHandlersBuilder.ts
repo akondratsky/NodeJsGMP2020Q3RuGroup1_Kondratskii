@@ -1,25 +1,17 @@
 import { Response, Request, NextFunction } from 'express';
-import { inject, injectable } from 'inversify';
-import { IErrorHandlersBuilder, ILoggerService, ErrorHandler } from 'app/interfaces';
-import { INJECTABLES } from 'app/types';
+import {  injectable } from 'inversify';
+import { IErrorHandlersBuilder, ErrorHandler } from 'app/interfaces';
 import { GroupNotFoundError, UserNotFoundError } from 'app/errors';
 import { ValidationError } from '@hapi/joi';
 
 @injectable()
 export class ErrorHandlersBuilder implements IErrorHandlersBuilder {
-    constructor(
-        @inject(INJECTABLES.LoggerService) private loggerService: ILoggerService
-    ) {}
-
     validationErrorHandler = (error: Error, req: Request, res: Response, next: NextFunction): void => {
         if (!(error instanceof ValidationError)) {
             return next(error);
         }
 
         const messages = (error as ValidationError).details.map(({ message }) => message);
-
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        this.loggerService.error('Validation error', (error as any)._original);
 
         res.status(400);
         res.json({
@@ -32,7 +24,9 @@ export class ErrorHandlersBuilder implements IErrorHandlersBuilder {
         if (!(error instanceof GroupNotFoundError)) {
             return next(error);
         }
-        this.loggerService.error(error.toString());
+        console.log('====================================================');
+        console.log('====================================================');
+        console.log('====================================================');
         res.json(error);
     }
 
@@ -40,8 +34,12 @@ export class ErrorHandlersBuilder implements IErrorHandlersBuilder {
         if (!(error instanceof UserNotFoundError)) {
             return next(error);
         }
-        this.loggerService.error(error.toString());
-        res.json(error);
+
+        res.status(400);
+        res.json({
+            error: true,
+            messages: ['User with such ID was not found']
+        });
     }
 
     create(): Array<ErrorHandler> {

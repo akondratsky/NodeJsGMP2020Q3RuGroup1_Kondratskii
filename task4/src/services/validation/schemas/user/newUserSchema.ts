@@ -1,13 +1,24 @@
 import Joi from '@hapi/joi';
 
+const MIN_AGE = 4;
+const MAX_AGE = 130;
+
 export const newUserSchema = Joi.object({
     login: Joi.string()
-        .required(),
+        .required()
+        .label('Login'),
     password: Joi.string()
         .alphanum()
-        .required(),
+        .required()
+        .label('Password'),
     age: Joi.number()
-        .min(4)
-        .max(130)
+        .min(MIN_AGE)
+        .max(MAX_AGE)
         .optional()
+        .label('Age')
+}).options({
+    abortEarly: false,
+    errors: {
+        wrap: { label: false }
+    }
 });

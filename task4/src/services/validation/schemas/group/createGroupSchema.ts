@@ -4,10 +4,19 @@ import { PERMISSION } from 'app/services/constants';
 
 export const createGroupSchema = Joi.object({
     name: Joi.string()
-        .required(),
+        .required()
+        .label('Group name'),
     permissions: Joi.array()
         .items(
-            Joi.any().allow(...Object.keys(PERMISSION))
+            Joi.string()
+                .valid(...Object.keys(PERMISSION))
+                .label('Permission')
         )
         .required()
+        .label('Array of permissions')
+}).options({
+    abortEarly: false,
+    errors: {
+        wrap: { label: false }
+    }
 });

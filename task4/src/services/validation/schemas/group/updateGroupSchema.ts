@@ -2,17 +2,26 @@ import Joi from '@hapi/joi';
 import {} from 'app/types';
 
 import { PERMISSION } from 'app/services/constants';
-import { GUID_PATTERN } from '../../constants';
 
 export const updateGroupSchema = Joi.object({
-    id:  Joi.string()
-        .pattern(GUID_PATTERN)
-        .required(),
+    id: Joi.string()
+        .guid({ version: 'uuidv4' })
+        .required()
+        .label('Group ID'),
     name: Joi.string()
-        .optional(),
+        .optional()
+        .label('Group name'),
     permissions: Joi.array()
         .items(
-            Joi.any().allow(...Object.keys(PERMISSION))
+            Joi.string()
+                .allow(...Object.keys(PERMISSION))
+                .label('Permission')
         )
         .optional()
+        .label('Permissions')
+}).options({
+    abortEarly: false,
+    errors: {
+        wrap: { label: false }
+    }
 });

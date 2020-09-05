@@ -1,7 +1,6 @@
 import { DataTypes, Model, Sequelize } from 'sequelize';
 import { sequelize } from 'app/config';
 import { User, NewUserModelView } from 'app/types';
-import { GroupModel } from './GroupModel';
 
 export class UserModel extends Model<User | NewUserModelView> {}
 

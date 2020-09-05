@@ -1,12 +1,11 @@
 import Joi from '@hapi/joi';
 
-import { GUID_PATTERN } from '../constants';
-
 
 export const guidSchema = Joi.string()
-    .pattern(GUID_PATTERN)
+    .guid({ version: 'uuidv4' })
     .required()
     .messages({
+        'string.guid': 'Group ID shoud be valid GUID',
         'string.pattern.base': 'Incorrect UUID',
         'string.empty': 'UUID is required'
     });

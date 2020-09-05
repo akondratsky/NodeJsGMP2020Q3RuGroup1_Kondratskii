@@ -38,7 +38,8 @@ export class UserController implements IUserController {
     }
 
     public async delete(req: Request, res: Response, next: NextFunction): Promise<void> {
-        await this.userService.delete(req.query.id as UUID).catch(next);
-        res.end();
+        await this.userService.delete(req.query.id as UUID)
+            .then(() => res.end())
+            .catch(next);
     }
 }

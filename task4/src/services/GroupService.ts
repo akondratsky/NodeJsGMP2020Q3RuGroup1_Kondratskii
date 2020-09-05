@@ -1,53 +1,100 @@
 import { injectable, inject } from 'inversify';
-import { ValidationError } from '@hapi/joi';
-import { IGroupService, IGroupProvider } from 'app/interfaces';
+import { IGroupService, IGroupProvider, ILoggerService } from 'app/interfaces';
 import { Group, UUID, UpdateGroupViewModel, CreateGroupViewModel, INJECTABLES } from 'app/types';
 import { guidSchema, createGroupSchema, updateGroupSchema } from './validation';
-
-
-// TODO: remove duplicated code in scope of creating of error handler
-
-const assertValidation = (error: ValidationError | undefined, msg: string) : void => {
-    if (error) {
-        throw new ValidationError(msg, null, null);
-    }
-};
-
-const validateId = (id: UUID): void => {
-    const { error } = guidSchema.validate(id);
-    assertValidation(error, 'Incorrect group ID');
-};
 
 
 @injectable()
 export class GroupService implements IGroupService {
     constructor(
-        @inject(INJECTABLES.GroupProvider) private groupProvider: IGroupProvider
+        @inject(INJECTABLES.GroupProvider) private groupProvider: IGroupProvider,
+        @inject(INJECTABLES.LoggerService) private loggerService: ILoggerService
     ) {}
 
     async getById(id: UUID): Promise<Group> {
-        validateId(id);
-        return await this.groupProvider.getById(id);
+        const { error } = guidSchema.validate(id);
+
+        if (error) {
+            this.loggerService.error(
+                'Incorrect request to GET group',
+                id
+            );
+            throw error;
+        }
+
+        const group = await this.groupProvider.getById(id);
+
+        this.loggerService.debug('Group was found', group);
+
+        return group;
     }
 
     async getAll(): Promise<Array<Group>> {
-        return await this.groupProvider.getAll();
+        const groups = await this.groupProvider.getAll();
+
+        this.loggerService.debug(`Found ${groups.length} groups`);
+
+        return groups;
     }
 
-    async create(group: CreateGroupViewModel): Promise<string> {
+    async create(group: CreateGroupViewModel): Promise<UUID> {
         const { error } = createGroupSchema.validate(group);
-        assertValidation(error, 'Incorrect fields');
-        return await this.groupProvider.create(group);
+
+        if (error) {
+            this.loggerService.error(
+                'Incorrect request to CREATE groupd',
+                group
+            );
+            throw error;
+        }
+
+        const id = await this.groupProvider.create(group);
+
+        this.loggerService.info(
+            `Successfully created group ${id}`,
+            { id, ...group }
+        );
+
+        return id;
     }
 
     async update(group: UpdateGroupViewModel): Promise<UUID> {
         const { error } = updateGroupSchema.validate(group);
-        assertValidation(error, 'Incorrect fields');
-        return await this.groupProvider.update(group);
+
+        if (error) {
+            this.loggerService.error(
+                'Incorrect request to UPDATE group',
+                group
+            );
+            throw error;
+        }
+
+        const id = await this.groupProvider.update(group);
+
+        this.loggerService.info(
+            `Successfully updated group ${id}`,
+            group
+        );
+
+        return id;
     }
 
     async delete(id: UUID): Promise<void> {
-        validateId(id);
-        return await this.groupProvider.delete(id);
+        const { error } = guidSchema.validate(id);
+
+        if (error) {
+            this.loggerService.error(
+                'Incorrect request to DELETE group',
+                id
+            );
+            throw error;
+        }
+
+        await this.groupProvider.delete(id);
+
+        this.loggerService.info(
+            'Group successfully deleted',
+            id
+        );
     }
 }
