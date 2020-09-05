@@ -31,7 +31,8 @@ export class GroupContoller implements IGroupController {
     }
 
     public async delete(req: Request, res: Response, next: NextFunction): Promise<void> {
-        await this.groupService.delete(req.query.id as string).catch(next);
-        res.end();
+        await this.groupService.delete(req.query.id as string)
+            .then(() => res.end())
+            .catch(next);
     }
 }

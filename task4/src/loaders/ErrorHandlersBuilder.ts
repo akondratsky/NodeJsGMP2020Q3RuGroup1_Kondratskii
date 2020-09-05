@@ -24,10 +24,11 @@ export class ErrorHandlersBuilder implements IErrorHandlersBuilder {
         if (!(error instanceof GroupNotFoundError)) {
             return next(error);
         }
-        console.log('====================================================');
-        console.log('====================================================');
-        console.log('====================================================');
-        res.json(error);
+        res.status(400);
+        res.json({
+            error: true,
+            messages: ['Group with such ID was not found']
+        });
     }
 
     userNotFoundErrorHandler = (error: Error, req: Request, res: Response, next: NextFunction): void => {
