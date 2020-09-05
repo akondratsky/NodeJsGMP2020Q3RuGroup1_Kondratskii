@@ -4,8 +4,8 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "start": "npm run build && node ./dst/src/main.js",
-    "build": "ef-tspm",
+    "start": "npm run build && node ./dst/main.js",
+    "build": "tsc && ef-tspm",
     "dev": "nodemon",
     "start-test-instance": "cross-env PORT=3123 npm start",
     "lint": "eslint . --ext .ts",
