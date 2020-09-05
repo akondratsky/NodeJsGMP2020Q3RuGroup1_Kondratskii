@@ -6,7 +6,7 @@ import { INJECTABLES } from 'app/types';
 const createRootRouter = (router: Router) => {
     const build = () => router;
     const addRouter = (path: string, routerBuilder: IRouterBuilder) => {
-        router.use(path, routerBuilder.create(path));
+        router.use(path, routerBuilder.create('/'));
         return { addRouter, build };
     };
     return { addRouter, build };
