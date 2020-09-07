@@ -20,13 +20,6 @@ GroupModel.init({
             DataTypes.ENUM('READ', 'WRITE', 'DELETE', 'SHARE', 'UPLOAD_FILES')
         ),
         defaultValue: []
-        // type: DataTypes.ENUM(
-        //     'READ',
-        //     'WRITE',
-        //     'DELETE',
-        //     'SHARE',
-        //     'UPLOAD_FILES'
-        // )
     }
 }, {
     tableName: 'Groups',
