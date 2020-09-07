@@ -1,6 +1,6 @@
-import { injectable } from 'inversify';
-import { IGroupProvider } from 'app/interfaces';
-import { UpdateGroupViewModel, Group, CreateGroupViewModel, UUID } from 'app/types';
+import { injectable, inject } from 'inversify';
+import { IGroupProvider, ILoggerService } from 'app/interfaces';
+import { UpdateGroupViewModel, Group, CreateGroupViewModel, UUID, INJECTABLES } from 'app/types';
 import { GroupModel } from 'app/models';
 import { Permission } from 'app/types/Permission';
 import { GroupNotFoundError } from 'app/errors';
@@ -19,12 +19,17 @@ const flattenGroup = (model: GroupModel): Group => {
 
 @injectable()
 export class GroupProvider implements IGroupProvider {
+    constructor(
+        @inject(INJECTABLES.LoggerService) private loggerService: ILoggerService
+    ) {}
+
     async getById(id: UUID): Promise<Group> {
         const group = await GroupModel.findOne({
             where: { id }
         });
 
         if (!group) {
+            this.loggerService.error('Group was not found to GET', id);
             throw new GroupNotFoundError(id);
         }
 
@@ -45,9 +50,12 @@ export class GroupProvider implements IGroupProvider {
         const [numberOfUpdated] = await GroupModel.update(group, {
             where: { id: group.id }
         });
+
         if (numberOfUpdated !== 1) {
+            this.loggerService.error('Group was not found to UPDATE', group);
             throw new GroupNotFoundError(group.id);
         }
+
         return group.id;
     }
 
@@ -55,7 +63,9 @@ export class GroupProvider implements IGroupProvider {
         const numberOfDeleted = await GroupModel.destroy({
             where: { id }
         });
+
         if (numberOfDeleted !== 1) {
+            this.loggerService.error('Group was not found to DELETE', id);
             throw new GroupNotFoundError(id);
         }
     }

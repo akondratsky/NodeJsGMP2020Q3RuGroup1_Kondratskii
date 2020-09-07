@@ -8,7 +8,7 @@ const setupDatabase = async () => {
         user: 'eynuhexy',
         host: 'lallah.db.elephantsql.com',
         database: 'eynuhexy',
-        password: 'qcrTBGpF7uIlN1ttErKyMQKX10_xVIoN'
+        password: '7l8IW5q-dbASGstIQLfFZkL4g9kyWm4p'
     });
 
     await client.connect();

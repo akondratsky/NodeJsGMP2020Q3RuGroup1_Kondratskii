@@ -8,7 +8,6 @@ import {
     newUserSchema,
     getObjectFromValidationError
 } from './validation';
-import { UserNotFoundError } from 'app/errors';
 
 
 @injectable()
