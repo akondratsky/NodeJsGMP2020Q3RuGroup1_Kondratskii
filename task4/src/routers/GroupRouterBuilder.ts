@@ -12,7 +12,7 @@ export class GroupRouter implements IRouterBuilder {
     create(baseUrl: string) : Router {
         return Router()
             .get(baseUrl, (req: Request, res: Response, next: NextFunction): void => {
-                this.groupController.get(req, res, next);
+                this.groupController.find(req, res, next);
             })
             .post(baseUrl, (req: Request, res: Response, next: NextFunction): void => {
                 this.groupController.create(req, res, next);

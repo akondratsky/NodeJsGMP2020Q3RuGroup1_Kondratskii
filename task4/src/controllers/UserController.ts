@@ -10,7 +10,7 @@ export class UserController implements IUserController {
         @inject(INJECTABLES.UserService) private userService: IUserService
     ) {}
 
-    public async get(req: Request, res: Response, next: NextFunction): Promise<Response<UserModelView>> {
+    public async search(req: Request, res: Response, next: NextFunction): Promise<Response<UserModelView>> {
         if (req.query.id) {
             return res.json(
                 await this.userService.getById(req.query.id as UUID).catch(next)

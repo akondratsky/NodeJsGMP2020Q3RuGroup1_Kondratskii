@@ -12,7 +12,7 @@ export class UserRouterBuilder implements IRouterBuilder {
     create(baseUrl: string) : Router {
         return Router()
             .get(baseUrl, async (req: Request, res: Response, next: NextFunction) => {
-                return await this.userController.get(req, res, next);
+                return await this.userController.search(req, res, next);
             })
             .post(baseUrl, async (req: Request, res: Response, next: NextFunction) => {
                 return await this.userController.create(req, res, next);
