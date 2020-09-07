@@ -961,6 +961,65 @@
 							"response": []
 						},
 						{
+							"name": "3A. Get by ID - incorrect ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "2ea2633c-9d01-4e01-bd0e-7ad82f2f9676",
+										"exec": [
+											"pm.test('Returns correct status', () => {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test('returns correct errors', () => {\r",
+											"    const result = pm.response.json();\r",
+											"    pm.expect(result).to.deep.equal({\r",
+											"        \"error\": true,\r",
+											"        \"messages\": [\r",
+											"            \"Group with such ID was not found\"\r",
+											"        ]\r",
+											"    });\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"thisNameIsOkay\",\r\n    \"permissions\": [\"TO BE THE KING\"]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{service_url}}/groups?id=100ad0ee-aeee-4493-87c9-5940a2832b2d",
+									"host": [
+										"{{service_url}}"
+									],
+									"path": [
+										"groups"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "100ad0ee-aeee-4493-87c9-5940a2832b2d"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "4. Update",
 							"event": [
 								{
@@ -1056,7 +1115,7 @@
 							"response": []
 						},
 						{
-							"name": "4A. Update with invalid ID",
+							"name": "4B. Update with invalid ID",
 							"event": [
 								{
 									"listen": "test",
@@ -1087,6 +1146,56 @@
 								"body": {
 									"mode": "raw",
 									"raw": "{\r\n    \"id\": \"asgawAWfAF\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{service_url}}/groups",
+									"host": [
+										"{{service_url}}"
+									],
+									"path": [
+										"groups"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "4C. Update - ID doesn't exist",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6730b7df-9884-416d-82bd-8cb50a3a1355",
+										"exec": [
+											"pm.test('Returns correct status', () => {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test('returns id', () => {\r",
+											"    const result = pm.response.json();\r",
+											"    pm.expect(result).to.deep.equal({\r",
+											"        \"error\": true,\r",
+											"        \"messages\": [\r",
+											"            \"Group ID must be a valid GUID\"\r",
+											"        ]\r",
+											"    });\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"100ad0ee-aeee-4493-87c9-5940a2832b2d\",\r\n    \"name\": \"helloapi\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1153,7 +1262,7 @@
 							"response": []
 						},
 						{
-							"name": "5. Delete the same group again",
+							"name": "5A. Delete the same group again",
 							"event": [
 								{
 									"listen": "test",
@@ -1203,6 +1312,63 @@
 										{
 											"key": "id",
 											"value": "{{group_id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "5B. Delete which does not exist",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "9c1358b7-cf4e-4302-8c51-9e59303a11da",
+										"exec": [
+											"pm.test('Returns correct status', () => {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test('Returns correct error', () => {\r",
+											"    const result = pm.response.json();\r",
+											"    pm.expect(result).to.deep.equal({\r",
+											"        \"error\": true,\r",
+											"        \"messages\": [\r",
+											"            \"Group with such ID was not found\"\r",
+											"        ]\r",
+											"    });\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{service_url}}/groups?id=100ad0ee-aeee-4493-87c9-5940a2832b2d",
+									"host": [
+										"{{service_url}}"
+									],
+									"path": [
+										"groups"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "100ad0ee-aeee-4493-87c9-5940a2832b2d"
 										}
 									]
 								}
@@ -1272,6 +1438,99 @@
 					],
 					"protocolProfileBehavior": {},
 					"_postman_isSubFolder": true
+				},
+				{
+					"name": "/permissions",
+					"item": [
+						{
+							"name": "1. Add users to group",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"groupId\": \"00011958-6022-4366-8f4e-55eb0645434d\",\r\n    \"userIds\": [\"00011958-6022-4366-8f4e-f4eb0645434d\", \"1d411958-6022-4366-8f4e-f4eb0645434d\"]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{service_url}}/permissions",
+									"host": [
+										"{{service_url}}"
+									],
+									"path": [
+										"permissions"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "1A. Add users to group - without body",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{service_url}}/permissions",
+									"host": [
+										"{{service_url}}"
+									],
+									"path": [
+										"permissions"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "1B. Add users to group - without body Copy",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{service_url}}/permissions",
+									"host": [
+										"{{service_url}}"
+									],
+									"path": [
+										"permissions"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "1C. Add when one already was added",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"groupId\": \"00011958-6022-4366-8f4e-55eb0645434d\",\r\n    \"userIds\": [\"a8ce1c3c-18c3-4d1a-9e92-d34731bae044\"]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{service_url}}/permissions",
+									"host": [
+										"{{service_url}}"
+									],
+									"path": [
+										"permissions"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -1318,42 +1577,42 @@
 	],
 	"variable": [
 		{
-			"id": "26c6c62e-2312-42fe-9b58-9d6373bfdc95",
+			"id": "0e8f91eb-6ce1-4397-9109-d4e312fb7439",
 			"key": "user_id",
 			"value": ""
 		},
 		{
-			"id": "885c3432-4865-46e0-9a62-e32897861d07",
+			"id": "3e219320-7494-4551-ae49-a8201631fa4d",
 			"key": "service_url",
 			"value": "http://localhost:4000"
 		},
 		{
-			"id": "6fe69354-4ab0-480c-8264-81eac34e35bf",
+			"id": "5d7b2590-ad70-4000-be96-4ba5fea82835",
 			"key": "user_login",
 			"value": "nodeadmin@gmail.com"
 		},
 		{
-			"id": "e13ed86e-ed54-4c4e-88ba-36478be358a8",
+			"id": "a53429ac-ddf9-452e-af6b-eded68e5520b",
 			"key": "user_password",
 			"value": "qwertyofcourse"
 		},
 		{
-			"id": "51600064-d5b0-42f6-98f1-501b4eb98598",
+			"id": "3a01f3a2-e0c6-43e6-af9d-ed205422a17f",
 			"key": "user_age",
 			"value": "15"
 		},
 		{
-			"id": "d4f32e2f-bece-40f7-a330-4e6bc06d0fd8",
+			"id": "0dc1d095-b3a1-4c3f-a36e-6d7dc2d9862d",
 			"key": "group_id",
 			"value": ""
 		},
 		{
-			"id": "13a6a2a7-26ba-4ea9-9d5c-ea741cb0ee40",
+			"id": "18d71a8e-cab0-42bb-845d-890f83d3b1be",
 			"key": "group_name",
 			"value": ""
 		},
 		{
-			"id": "e3da9ec9-a151-43ee-9993-be79f1acb96a",
+			"id": "74531c52-7421-4d91-8299-38a0b0ad659f",
 			"key": "group_permissions",
 			"value": ""
 		}
