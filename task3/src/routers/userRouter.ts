@@ -29,20 +29,3 @@ router.delete('/', validator.body(idSchema), async (req, res) => {
 });
 
 export default router;
-
-
-export class UserRouter {
-    private srv: number;
-
-    constructor(serv: number) {
-        this.srv = serv;
-    }
-
-    create() : Router {
-        return Router()
-            .get('/', validator.query(idSchema), async (req, res) => {
-                const user = this.srv.toExponential();
-                return user;
-            });
-    }
-}
