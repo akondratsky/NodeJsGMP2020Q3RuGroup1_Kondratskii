@@ -25,20 +25,20 @@ export class LoggerService implements ILoggerService {
         ]
     });
 
-    error(message: string, serializable?: any): Promise<void> {
+    async error(message: string, serializable?: any): Promise<void> {
         this.logger.error(getText(message, serializable));
-        return Promise.resolve();
+        return await Promise.resolve();
     }
 
-    info(message: string, serializable?: any): Promise<void> {
+    async info(message: string, serializable?: any): Promise<void> {
         this.logger.info(getText(message, serializable));
-        return Promise.resolve();
+        return await Promise.resolve();
     }
 
-    debug(message: string, serializable?: any): Promise<void> {
+    async debug(message: string, serializable?: any): Promise<void> {
         if (DEBUG) {
             this.logger.debug(getText(message, serializable));
         }
-        return Promise.resolve();
+        return await Promise.resolve();
     }
 }

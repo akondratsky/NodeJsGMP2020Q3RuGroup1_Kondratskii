@@ -9,6 +9,7 @@ import {
     getObjectFromValidationError
 } from './validation';
 
+import { loggable } from 'app/aspect/logger';
 
 @injectable()
 export class UserService implements IUserService {
@@ -17,6 +18,7 @@ export class UserService implements IUserService {
         @inject(INJECTABLES.LoggerService) private loggerService: ILoggerService
     ) {}
 
+    @loggable
     async search(loginSubstring: string, limit: number | undefined): Promise<Array<UserModelView>> {
         const { error } = searchUserSchema.validate({ loginSubstring, limit });
 
@@ -34,6 +36,7 @@ export class UserService implements IUserService {
         return users;
     }
 
+    @loggable
     async getById(id: UUID): Promise<UserModelView> {
         const { error } = guidSchema.validate(id);
 
@@ -52,6 +55,7 @@ export class UserService implements IUserService {
         return user;
     }
 
+    @loggable
     async create(user: NewUserModelView): Promise<UUID> {
         const { error } = newUserSchema.validate(user);
 
@@ -70,6 +74,7 @@ export class UserService implements IUserService {
         return id;
     }
 
+    @loggable
     async update(user: UpdateUserModelView): Promise<UUID> {
         const { error } = updateUserSchema.validate(user);
 
@@ -88,6 +93,7 @@ export class UserService implements IUserService {
         return userId;
     }
 
+    @loggable
     async delete(id: UUID): Promise<void> {
         const { error } = guidSchema.validate(id);
 
