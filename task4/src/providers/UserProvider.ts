@@ -47,7 +47,7 @@ export class UserProvider implements IUserProvider {
         });
 
         if (!user) {
-            this.loggerService.error('User was not found to GET', id);
+            this.loggerService.error(this, this.getById, 'User was not found to GET', id);
             throw new UserNotFoundError(id);
         }
 
@@ -72,7 +72,7 @@ export class UserProvider implements IUserProvider {
         });
 
         if (numberOfUpdated !== 1) {
-            this.loggerService.error('User was not found to UPDATE', user);
+            this.loggerService.error(this, this.update, 'User was not found to UPDATE', user);
             throw new UserNotFoundError(user.id);
         }
 
@@ -85,7 +85,7 @@ export class UserProvider implements IUserProvider {
         });
 
         if (numberOfDeleted !== 1) {
-            this.loggerService.error('User was not found to DELETE', id);
+            this.loggerService.error(this, this.delete, 'User was not found to DELETE', id);
             throw new UserNotFoundError(id);
         }
     }

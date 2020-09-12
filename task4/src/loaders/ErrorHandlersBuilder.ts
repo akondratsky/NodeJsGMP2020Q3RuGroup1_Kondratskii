@@ -51,7 +51,7 @@ export class ErrorHandlersBuilder implements IErrorHandlersBuilder {
 
     // eslint-disable-next-line
     uncaughtErrorHandler = (error: Error, req: Request, res: Response, next: NextFunction): void => {
-        this.loggerService.error('Uncaught exception', error);
+        this.loggerService.error(this, this.uncaughtErrorHandler, 'Uncaught exception', error);
         res.status(500);
         res.json({
             error: true,

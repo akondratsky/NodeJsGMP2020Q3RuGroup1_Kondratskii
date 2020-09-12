@@ -17,7 +17,9 @@ export class PermissionProvider implements IPermissionProvider {
 
         const result = await PermissionModel.bulkCreate(records);
 
-        this.loggerService.info(`Successfully assigned role to ${result.length} users`, { groupId, userIds });
+        this.loggerService.info(
+            this, this.addUsersToGroup, `Successfully assigned role to ${result.length} users`, { groupId, userIds }
+        );
 
         return result.length;
     }

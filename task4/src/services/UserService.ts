@@ -9,7 +9,7 @@ import {
     getObjectFromValidationError
 } from './validation';
 
-import { loggable } from 'app/aspect/logger';
+// import { loggable } from 'app/aspect/logger';
 
 @injectable()
 export class UserService implements IUserService {
@@ -18,95 +18,103 @@ export class UserService implements IUserService {
         @inject(INJECTABLES.LoggerService) private loggerService: ILoggerService
     ) {}
 
-    @loggable
     async search(loginSubstring: string, limit: number | undefined): Promise<Array<UserModelView>> {
+        this.loggerService.debug(
+            this, this.search, `Searching users with loginSubstring="${loginSubstring}", limit=${limit}`
+        );
+
         const { error } = searchUserSchema.validate({ loginSubstring, limit });
 
         if (error) {
             this.loggerService.error(
-                'Incorrect request to SEARCH users',
-                getObjectFromValidationError(error)
+                this, this.search, 'Incorrect request to SEARCH users', getObjectFromValidationError(error)
             );
             throw error;
         }
         const users = await this.userProvider.search(loginSubstring, limit);
 
-        this.loggerService.debug(`Found ${users.length} users, loginSubstring="${loginSubstring}", limit=${limit}`);
+        this.loggerService.debug(
+            this, this.search, `Found ${users.length} users, loginSubstring="${loginSubstring}", limit=${limit}`
+        );
 
         return users;
     }
 
-    @loggable
     async getById(id: UUID): Promise<UserModelView> {
+        this.loggerService.debug(
+            this, this.getById, `Getting user with id="${id}"`
+        );
+
         const { error } = guidSchema.validate(id);
 
         if (error) {
-            this.loggerService.error(
-                'Incorrect request to GET user',
-                id
-            );
+            this.loggerService.error(this, this.getById, 'Incorrect request to GET user', id);
             throw error;
         }
 
         const user = await this.userProvider.getById(id);
 
-        this.loggerService.debug('User found by id', user);
+        this.loggerService.debug(this, this.getById, 'User found by id', user);
 
         return user;
     }
 
-    @loggable
     async create(user: NewUserModelView): Promise<UUID> {
+        this.loggerService.debug(
+            this, this.create, 'Creating user', { login: user.login, age: user.age }
+        );
+
         const { error } = newUserSchema.validate(user);
 
         if (error) {
             this.loggerService.error(
-                'Incorrect request to CREATE user',
-                getObjectFromValidationError(error)
+                this, this.create, 'Incorrect request to CREATE user', getObjectFromValidationError(error)
             );
             throw error;
         }
 
         const id = await this.userProvider.create(user);
 
-        this.loggerService.info('New user created', { id, ...user });
+        this.loggerService.info(this, this.create, 'New user created', { id, ...user });
 
         return id;
     }
 
-    @loggable
     async update(user: UpdateUserModelView): Promise<UUID> {
+        this.loggerService.debug(
+            this, this.update, 'Updating user', { id: user.id, login: user.login, age: user.password }
+        );
+
         const { error } = updateUserSchema.validate(user);
 
         if (error) {
             this.loggerService.error(
-                'Incorrect request to UPDATE user',
-                getObjectFromValidationError(error)
+                this, this.update, 'Incorrect request to UPDATE user', getObjectFromValidationError(error)
             );
             throw error;
         }
 
         const userId = await this.userProvider.update(user);
 
-        this.loggerService.debug(`User successfully updated, ID=${userId}`);
+        this.loggerService.debug(this, this.update, `User successfully updated, ID=${userId}`);
 
         return userId;
     }
 
-    @loggable
     async delete(id: UUID): Promise<void> {
+        this.loggerService.debug(
+            this, this.update, 'Deleting user', id
+        );
+
         const { error } = guidSchema.validate(id);
 
         if (error) {
-            this.loggerService.error(
-                'Incorrect request to DELETE user',
-                id
-            );
+            this.loggerService.error(this, this.delete, 'Incorrect request to DELETE user', id);
             throw error;
         }
 
         await this.userProvider.delete(id);
 
-        this.loggerService.info('User successfully deleted', id);
+        this.loggerService.info(this, this.delete, 'User successfully deleted', id);
     }
 }

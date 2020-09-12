@@ -14,7 +14,7 @@ export class MentoringApp implements IMentoringApp {
 
     // eslint-disable-next-line
     fatalErrorHandler = (error: any) => {
-        this.loggerService.error('FATAL: Uncaught error', error);
+        this.loggerService.error(this, this.fatalErrorHandler, 'FATAL: Uncaught error', error);
     }
 
     public init(app: Application): void {

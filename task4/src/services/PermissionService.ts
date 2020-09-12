@@ -15,7 +15,9 @@ export class PermissionService implements IPermissionService {
         const { error } = addUsersToGroupSchema.validate({ groupId, userIds });
 
         if (error) {
-            this.loggerService.error('Incorrect request to add users to group', { groupId, userIds });
+            this.loggerService.error(
+                this, this.addUsersToGroup, 'Incorrect request to add users to group', { groupId, userIds }
+            );
             throw error;
         }
 

@@ -16,6 +16,8 @@ export class GroupService implements IGroupService {
 
         if (error) {
             this.loggerService.error(
+                this,
+                this.getById,
                 'Incorrect request to GET group',
                 id
             );
@@ -24,7 +26,7 @@ export class GroupService implements IGroupService {
 
         const group = await this.groupProvider.getById(id);
 
-        this.loggerService.debug('Group was found', group);
+        this.loggerService.debug(this, this.getById, 'Group was found', group);
 
         return group;
     }
@@ -32,7 +34,7 @@ export class GroupService implements IGroupService {
     async getAll(): Promise<Array<Group>> {
         const groups = await this.groupProvider.getAll();
 
-        this.loggerService.debug(`Found ${groups.length} groups`);
+        this.loggerService.debug(this, this.getAll, `Found ${groups.length} groups`);
 
         return groups;
     }
@@ -42,6 +44,8 @@ export class GroupService implements IGroupService {
 
         if (error) {
             this.loggerService.error(
+                this,
+                this.create,
                 'Incorrect request to CREATE groupd',
                 group
             );
@@ -51,6 +55,8 @@ export class GroupService implements IGroupService {
         const id = await this.groupProvider.create(group);
 
         this.loggerService.info(
+            this,
+            this.create,
             `Successfully created group ${id}`,
             { id, ...group }
         );
@@ -63,6 +69,8 @@ export class GroupService implements IGroupService {
 
         if (error) {
             this.loggerService.error(
+                this,
+                this.update,
                 'Incorrect request to UPDATE group',
                 group
             );
@@ -72,6 +80,8 @@ export class GroupService implements IGroupService {
         const id = await this.groupProvider.update(group);
 
         this.loggerService.info(
+            this,
+            this.update,
             `Successfully updated group ${id}`,
             group
         );
@@ -84,6 +94,8 @@ export class GroupService implements IGroupService {
 
         if (error) {
             this.loggerService.error(
+                this,
+                this.delete,
                 'Incorrect request to DELETE group',
                 id
             );
@@ -93,6 +105,8 @@ export class GroupService implements IGroupService {
         await this.groupProvider.delete(id);
 
         this.loggerService.info(
+            this,
+            this.delete,
             'Group successfully deleted',
             id
         );
