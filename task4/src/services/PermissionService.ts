@@ -2,6 +2,7 @@ import { injectable, inject } from 'inversify';
 import { IPermissionService, IPermissionProvider, ILoggerService } from 'app/interfaces';
 import { UUID, INJECTABLES } from 'app/types';
 import { addUsersToGroupSchema } from './validation';
+import { measurable } from 'app/aspect/measurable';
 
 
 @injectable()
@@ -11,6 +12,7 @@ export class PermissionService implements IPermissionService {
         @inject(INJECTABLES.LoggerService) private loggerService: ILoggerService
     ) {}
 
+    @measurable
     async addUsersToGroup(groupId: UUID, userIds: Array<UUID>): Promise<number> {
         const { error } = addUsersToGroupSchema.validate({ groupId, userIds });
 

@@ -8,6 +8,7 @@ import {
     newUserSchema,
     getObjectFromValidationError
 } from './validation';
+import { measurable } from 'app/aspect/measurable';
 
 // import { loggable } from 'app/aspect/logger';
 
@@ -18,6 +19,7 @@ export class UserService implements IUserService {
         @inject(INJECTABLES.LoggerService) private loggerService: ILoggerService
     ) {}
 
+    @measurable
     async search(loginSubstring: string, limit: number | undefined): Promise<Array<UserModelView>> {
         this.loggerService.debug(
             this, this.search, `Searching users with loginSubstring="${loginSubstring}", limit=${limit}`
@@ -40,6 +42,7 @@ export class UserService implements IUserService {
         return users;
     }
 
+    @measurable
     async getById(id: UUID): Promise<UserModelView> {
         this.loggerService.debug(
             this, this.getById, `Getting user with id="${id}"`
@@ -59,6 +62,7 @@ export class UserService implements IUserService {
         return user;
     }
 
+    @measurable
     async create(user: NewUserModelView): Promise<UUID> {
         this.loggerService.debug(
             this, this.create, 'Creating user', { login: user.login, age: user.age }
@@ -80,6 +84,7 @@ export class UserService implements IUserService {
         return id;
     }
 
+    @measurable
     async update(user: UpdateUserModelView): Promise<UUID> {
         this.loggerService.debug(
             this, this.update, 'Updating user', { id: user.id, login: user.login, age: user.password }
@@ -101,6 +106,7 @@ export class UserService implements IUserService {
         return userId;
     }
 
+    @measurable
     async delete(id: UUID): Promise<void> {
         this.loggerService.debug(
             this, this.update, 'Deleting user', id

@@ -2,6 +2,7 @@ import { injectable, inject } from 'inversify';
 import { IGroupService, IGroupProvider, ILoggerService } from 'app/interfaces';
 import { Group, UUID, UpdateGroupViewModel, CreateGroupViewModel, INJECTABLES } from 'app/types';
 import { guidSchema, createGroupSchema, updateGroupSchema } from './validation';
+import { measurable } from 'app/aspect/measurable';
 
 
 @injectable()
@@ -11,6 +12,7 @@ export class GroupService implements IGroupService {
         @inject(INJECTABLES.LoggerService) private loggerService: ILoggerService
     ) {}
 
+    @measurable
     async getById(id: UUID): Promise<Group> {
         const { error } = guidSchema.validate(id);
 
@@ -31,6 +33,7 @@ export class GroupService implements IGroupService {
         return group;
     }
 
+    @measurable
     async getAll(): Promise<Array<Group>> {
         const groups = await this.groupProvider.getAll();
 
@@ -39,6 +42,7 @@ export class GroupService implements IGroupService {
         return groups;
     }
 
+    @measurable
     async create(group: CreateGroupViewModel): Promise<UUID> {
         const { error } = createGroupSchema.validate(group);
 
@@ -64,6 +68,7 @@ export class GroupService implements IGroupService {
         return id;
     }
 
+    @measurable
     async update(group: UpdateGroupViewModel): Promise<UUID> {
         const { error } = updateGroupSchema.validate(group);
 
@@ -89,6 +94,7 @@ export class GroupService implements IGroupService {
         return id;
     }
 
+    @measurable
     async delete(id: UUID): Promise<void> {
         const { error } = guidSchema.validate(id);
 
