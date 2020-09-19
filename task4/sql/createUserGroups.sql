@@ -1,0 +1,7 @@
+DROP TABLE IF EXISTS "UserGroups" CASCADE;
+
+CREATE TABLE "UserGroups" (
+    "userId" UUID REFERENCES "Users" ("id") ON UPDATE CASCADE ON DELETE CASCADE,
+    "groupId" UUID REFERENCES "Groups" ("id") ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT pkey PRIMARY KEY ("userId", "groupId")
+);

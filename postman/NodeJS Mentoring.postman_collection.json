@@ -6,552 +6,1615 @@
 	},
 	"item": [
 		{
-			"name": "task2",
+			"name": "Tests",
 			"item": [
 				{
-					"name": "get user by id (correct) - admin",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:4000/users/e7fddbd6-b49b-45d3-9843-c070b0e52acc",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "4000",
-							"path": [
-								"users",
-								"e7fddbd6-b49b-45d3-9843-c070b0e52acc"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "update (correct) - admin",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"id\": \"e7fddbd6-b49b-45d3-9843-c070b0e52acc\",\n    \"login\": \"global_super_admin\",\n    \"password\": \"12345hehehe\",\n    \"age\": 16,\n    \"isDeleted\": false\n}",
-							"options": {
-								"raw": {}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:4000/users",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "4000",
-							"path": [
-								"users"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "delete (correct) - admin",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"id\": \"e7fddbd6-b49b-45d3-9843-c070b0e52acc\"\n}",
-							"options": {
-								"raw": {}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:4000/users",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "4000",
-							"path": [
-								"users"
-							],
-							"query": [
+					"name": "/users",
+					"item": [
+						{
+							"name": "1. Get all users",
+							"event": [
 								{
-									"key": "",
-									"value": null,
-									"disabled": true
+									"listen": "test",
+									"script": {
+										"id": "27c13487-69c3-4458-a8c1-4dcf476a328f",
+										"exec": [
+											"const expectedJsonBody = [\r",
+											"    {\r",
+											"        \"id\": \"00011958-6022-4366-8f4e-f4eb0645434d\",\r",
+											"        \"login\": \"admin\",\r",
+											"        \"age\": 15\r",
+											"    },\r",
+											"    {\r",
+											"        \"id\": \"1d411958-6022-4366-8f4e-f4eb0645434d\",\r",
+											"        \"login\": \"nocturnal_depression\",\r",
+											"        \"age\": 42\r",
+											"    },\r",
+											"    {\r",
+											"        \"id\": \"a8ce1c3c-18c3-4d1a-9e92-d34731bae044\",\r",
+											"        \"login\": \"dimmu_borgir\",\r",
+											"        \"age\": 13\r",
+											"    },\r",
+											"    {\r",
+											"        \"id\": \"d2ffd640-5aee-4944-8440-696c829d9cf6\",\r",
+											"        \"login\": \"lamia\",\r",
+											"        \"age\": 22\r",
+											"    },\r",
+											"    {\r",
+											"        \"id\": \"eeeeeeee-5aee-4944-8440-696c829d9cf6\",\r",
+											"        \"login\": \"johny\",\r",
+											"        \"age\": 22\r",
+											"    },\r",
+											"    {\r",
+											"        \"id\": \"7949c23b-2d27-4681-8753-5929a617332b\",\r",
+											"        \"login\": \"john smith\",\r",
+											"        \"age\": 33\r",
+											"    }\r",
+											"];\r",
+											"\r",
+											"pm.test('Status test', () => {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test('Correct length (if base was initialized properly)', () => {\r",
+											"    const users = pm.response.json()\r",
+											"    pm.expect(users.length).to.equal(6);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
 								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "search - all by default",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:4000/users",
-							"protocol": "http",
-							"host": [
-								"localhost"
 							],
-							"port": "4000",
-							"path": [
-								"users"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "create (correct)",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"id\": \"e7fddbd6-b49b-45d3-9843-000000000000\",\n    \"login\": \"moderator\",\n    \"password\": \"qwerty\",\n    \"age\": 21,\n    \"isDeleted\": false\n}",
-							"options": {
-								"raw": {}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:4000/users",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "4000",
-							"path": [
-								"users"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "search - with limit",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:4000/users?limit=3",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "4000",
-							"path": [
-								"users"
-							],
-							"query": [
-								{
-									"key": "limit",
-									"value": "3"
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{service_url}}/users",
+									"host": [
+										"{{service_url}}"
+									],
+									"path": [
+										"users"
+									]
 								}
-							]
+							},
+							"response": []
+						},
+						{
+							"name": "2. Create user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "44faaf1a-14ee-484a-bdc3-52c7327696ca",
+										"exec": [
+											"pm.test('Returns correct status', () => {\r",
+											"    pm.response.to.have.status(200);\r",
+											"    pm.collectionVariables.set('user_id', pm.response.json());\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"login\": \"{{user_login}}\",\r\n    \"password\": \"{{user_password}}\",\r\n    \"age\": {{user_age}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{service_url}}/users",
+									"host": [
+										"{{service_url}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "2A. Create - incorrect data",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "d31c1007-3c8c-495d-a0f3-11bbd88f933c",
+										"exec": [
+											"pm.test('Returns correct status', () => {\r",
+											"    pm.response.to.have.status(400);\r",
+											"\r",
+											"});\r",
+											"\r",
+											"pm.test('Returns correct error data', () => {\r",
+											"    const result = pm.response.json();\r",
+											"    pm.expect(result).to.deep.equal({\r",
+											"        \"error\": true,\r",
+											"        \"messages\": [\r",
+											"            \"Login is required\",\r",
+											"            \"Password is required\",\r",
+											"            \"Age must be a number\"\r",
+											"        ]\r",
+											"    });\r",
+											"})\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"age\": \"asfsaf\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{service_url}}/users",
+									"host": [
+										"{{service_url}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "2B. Create - incorrect data 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "8a7fb337-71c9-4c5e-967c-42eaee1dc726",
+										"exec": [
+											"pm.test('Returns correct status', () => {\r",
+											"    pm.response.to.have.status(400);\r",
+											"\r",
+											"});\r",
+											"\r",
+											"pm.test('Returns correct error data', () => {\r",
+											"    const result = pm.response.json();\r",
+											"    pm.expect(result).to.deep.equal({\r",
+											"        \"error\": true,\r",
+											"        \"messages\": [\r",
+											"            \"Password must only contain alpha-numeric characters\",\r",
+											"            \"Age must be less than or equal to 130\"\r",
+											"        ]\r",
+											"    });\r",
+											"})\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"login\": \"dsfasdfasfasfe\",\r\n    \"password\": \"12vq38fu20%&*&\",\r\n    \"age\": 1000\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{service_url}}/users",
+									"host": [
+										"{{service_url}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "2C. Create - incorrect data 3",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "e8bea108-7dcb-4d0d-b9a8-73f85a52bf74",
+										"exec": [
+											"pm.test('Returns correct status', () => {\r",
+											"    pm.response.to.have.status(400);\r",
+											"\r",
+											"});\r",
+											"\r",
+											"pm.test('Returns correct error data', () => {\r",
+											"    const result = pm.response.json();\r",
+											"    pm.expect(result).to.deep.equal({\r",
+											"        \"error\": true,\r",
+											"        \"messages\": [\r",
+											"            \"Age must be larger than or equal to 4\"\r",
+											"        ]\r",
+											"    });\r",
+											"})\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"login\": \"dsfasdfasfasfe\",\r\n    \"password\": \"12vq3\",\r\n    \"age\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{service_url}}/users",
+									"host": [
+										"{{service_url}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "3. Get created user by ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "b332fe22-2a26-4bc2-b853-9eb381baac65",
+										"exec": [
+											"pm.test('Correct data got', () => {\r",
+											"    const { id, login, age } = pm.response.json();\r",
+											"    pm.expect(id).to.equal(pm.collectionVariables.get('user_id'));\r",
+											"    pm.expect(login).to.equal(pm.collectionVariables.get('user_login'));\r",
+											"    pm.expect(age).to.equal(+pm.collectionVariables.get('user_age'));\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{service_url}}/users?id={{user_id}}",
+									"host": [
+										"{{service_url}}"
+									],
+									"path": [
+										"users"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "{{user_id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "3A. Get created user (incorrect ID)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "076dc792-354f-4400-98c2-db61a0a13ee7",
+										"exec": [
+											"pm.test('Returns correct status', () => {\r",
+											"    pm.response.to.have.status(400);\r",
+											"\r",
+											"});\r",
+											"\r",
+											"pm.test('Returns correct error data', () => {\r",
+											"    const result = pm.response.json();\r",
+											"    pm.expect(result).to.deep.equal({\r",
+											"    \"error\": true,\r",
+											"    \"messages\": [\r",
+											"        \"Group ID shoud be valid GUID\"\r",
+											"    ]\r",
+											"});\r",
+											"})\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{service_url}}/users?id=42",
+									"host": [
+										"{{service_url}}"
+									],
+									"path": [
+										"users"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "42"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "4. Search by name without limit ('a')",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5e748506-087a-46a3-9e69-5a4f3ea50373",
+										"exec": [
+											"pm.test('correct response', () => {\r",
+											"    const expectedSearchResults = [\r",
+											"        {\r",
+											"            \"id\": \"00011958-6022-4366-8f4e-f4eb0645434d\",\r",
+											"            \"login\": \"admin\",\r",
+											"            \"age\": 15\r",
+											"        },\r",
+											"        {\r",
+											"            \"id\": \"1d411958-6022-4366-8f4e-f4eb0645434d\",\r",
+											"            \"login\": \"nocturnal_depression\",\r",
+											"            \"age\": 42\r",
+											"        },\r",
+											"        {\r",
+											"            \"id\": \"d2ffd640-5aee-4944-8440-696c829d9cf6\",\r",
+											"            \"login\": \"lamia\",\r",
+											"            \"age\": 22\r",
+											"        },\r",
+											"        {\r",
+											"            \"id\": \"6b9f92ee-3ab7-422a-946c-76fd51429762\",\r",
+											"            \"login\": \"nodeadmin@gmail.com\",\r",
+											"            \"age\": 151\r",
+											"        }\r",
+											"    ];\r",
+											"    const users = pm.response.json();\r",
+											"    pm.expect(users.length).to.equal(4);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{service_url}}/users?loginSubstring=a",
+									"host": [
+										"{{service_url}}"
+									],
+									"path": [
+										"users"
+									],
+									"query": [
+										{
+											"key": "loginSubstring",
+											"value": "a"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "5. Search by name with limit = 1 ('a')",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "591b9e41-d240-4ba8-b063-2ed2012ab035",
+										"exec": [
+											"pm.test('correct response', () => {\r",
+											"    const users = pm.response.json();\r",
+											"    pm.expect(users.length).to.equal(1);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{service_url}}/users?loginSubstring=a&limit=1",
+									"host": [
+										"{{service_url}}"
+									],
+									"path": [
+										"users"
+									],
+									"query": [
+										{
+											"key": "loginSubstring",
+											"value": "a"
+										},
+										{
+											"key": "limit",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "6. Update user by ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6b21e80e-f92a-4df5-ab1b-9b71cd64da6e",
+										"exec": [
+											"pm.test('correct response', () => {\r",
+											"    const id = pm.response.json();\r",
+											"    pm.expect(id).to.equal(pm.collectionVariables.get('user_id'));\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"{{user_id}}\",\r\n    \"login\": \"new_test_login\",\r\n    \"password\": \"ohcommon\",\r\n    \"age\": 42\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{service_url}}/users",
+									"host": [
+										"{{service_url}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "6A. Update - incorrect data",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "7091e3c0-b95a-4b29-abdf-b0be50633144",
+										"exec": [
+											"pm.test('Returns correct status', () => {\r",
+											"    pm.response.to.have.status(400);\r",
+											"\r",
+											"});\r",
+											"\r",
+											"pm.test('Returns correct error data', () => {\r",
+											"    const result = pm.response.json();\r",
+											"    pm.expect(result).to.deep.equal({\r",
+											"        \"error\": true,\r",
+											"        \"messages\": [\r",
+											"            \"User ID must be a valid GUID\",\r",
+											"            \"Password must only contain alpha-numeric characters\"\r",
+											"        ]\r",
+											"    });\r",
+											"})\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"Afs\",\r\n    \"password\": \"12f3-9h(*(*989\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{service_url}}/users",
+									"host": [
+										"{{service_url}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "7. Check user was updated",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "623aae64-9f73-4c81-a2a0-8ffa7bc03528",
+										"exec": [
+											"pm.test('Correct data got', () => {\r",
+											"    const { id, login, age } = pm.response.json();\r",
+											"    pm.expect(id).to.equal(pm.collectionVariables.get('user_id'));\r",
+											"    pm.expect(login).to.equal('new_test_login');\r",
+											"    pm.expect(age).to.equal(42);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{service_url}}/users?id={{user_id}}",
+									"host": [
+										"{{service_url}}"
+									],
+									"path": [
+										"users"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "{{user_id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "8. Delete user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "2b22801f-a7ac-4917-bf61-9d0beaab0325",
+										"exec": [
+											"pm.test('Returns correct response', () => {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{service_url}}/users?id={{user_id}}",
+									"host": [
+										"{{service_url}}"
+									],
+									"path": [
+										"users"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "{{user_id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "9. Get deleted user - incorrect",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "cf373796-46dc-406f-90d3-d0a42ea39ed9",
+										"exec": [
+											"pm.test('Returns correct response', () => {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test('Returns correct error', () => {\r",
+											"    const result = pm.response.json();\r",
+											"    pm.expect(result).to.deep.equal({\r",
+											"        \"error\": true,\r",
+											"        \"messages\": [\r",
+											"            \"User with such ID was not found\"\r",
+											"        ]\r",
+											"    });\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{service_url}}/users?id={{user_id}}",
+									"host": [
+										"{{service_url}}"
+									],
+									"path": [
+										"users"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "{{user_id}}"
+										}
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
 				},
 				{
-					"name": "search - with substring",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:4000/users?search=aleksandr&limit=5",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "4000",
-							"path": [
-								"users"
-							],
-							"query": [
+					"name": "/groups",
+					"item": [
+						{
+							"name": "1. Get all groups",
+							"event": [
 								{
-									"key": "search",
-									"value": "aleksandr"
+									"listen": "test",
+									"script": {
+										"id": "c5d50cda-aa60-46af-a172-43cdb05380d5",
+										"exec": [
+											"pm.test('Correct status', () => {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test('Returns correct data', () => {\r",
+											"    const dataObject = pm.response.json();\r",
+											"    const expectedResponse = '[{\"id\":\"00011958-6022-4366-8f4e-55eb0645434d\",\"name\":\"admin\",\"permissions\":[\"READ\",\"WRITE\",\"DELETE\",\"SHARE\",\"UPLOAD_FILES\"]},{\"id\":\"00011958-6022-4366-8f4e-55eb06454111\",\"name\":\"user\",\"permissions\":[\"READ\",\"SHARE\"]}]';\r",
+											"    pm.expect(JSON.stringify(dataObject)).to.equal(expectedResponse);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{service_url}}/groups",
+									"host": [
+										"{{service_url}}"
+									],
+									"path": [
+										"groups"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "2. Create group",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "69bf7e4a-45ac-43b3-8c56-d60659c3c2ba",
+										"exec": [
+											"pm.test('Returns correct status', () => {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test('Put group_id into collection variable', () => {\r",
+											"    pm.collectionVariables.set('group_id', pm.response.json());\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
 								},
 								{
-									"key": "limit",
-									"value": "5"
+									"listen": "prerequest",
+									"script": {
+										"id": "06aaa2dd-e5ad-4edd-a656-0c97398931ab",
+										"exec": [
+											"pm.collectionVariables.set('group_name', \"pretty little administrators\");\r",
+											"pm.collectionVariables.set('group_permissions', JSON.stringify([\"READ\", \"WRITE\"]));"
+										],
+										"type": "text/javascript"
+									}
 								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "get user by id (400) - invalid ID",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:4000/users/e7fddbd6",
-							"protocol": "http",
-							"host": [
-								"localhost"
 							],
-							"port": "4000",
-							"path": [
-								"users",
-								"e7fddbd6"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "get user by id (404) - ID does not exist",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:4000/users/e7fddbd6-0000-0000-0000-c070b0e52acc",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "4000",
-							"path": [
-								"users",
-								"e7fddbd6-0000-0000-0000-c070b0e52acc"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "update/create (400) - invalid input",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"id\": \"e7fddbd6-b49b-45d3-9843-c070b0e52accf\",\n    \"password\": \"1234$$$5\",\n    \"age\": 160,\n    \"isDeleted\": false\n}",
-							"options": {
-								"raw": {}
-							}
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"{{group_name}}\",\r\n    \"permissions\": {{group_permissions}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{service_url}}/groups",
+									"host": [
+										"{{service_url}}"
+									],
+									"path": [
+										"groups"
+									]
+								}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "http://localhost:4000/users",
-							"protocol": "http",
-							"host": [
-								"localhost"
+						{
+							"name": "2A. Create group, incorrect data",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "3daad40a-31c0-48b1-99eb-3c5efc253505",
+										"exec": [
+											"pm.test('Returns correct status', () => {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test('returns correct errors', () => {\r",
+											"    const result = pm.response.json();\r",
+											"    pm.expect(result).to.deep.equal({\r",
+											"        \"error\": true,\r",
+											"        \"messages\": [\r",
+											"            \"Group name is required\",\r",
+											"            \"Array of permissions is required\",\r",
+											"        ]\r",
+											"    });\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
 							],
-							"port": "4000",
-							"path": [
-								"users"
-							]
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n}"
+								},
+								"url": {
+									"raw": "{{service_url}}/groups",
+									"host": [
+										"{{service_url}}"
+									],
+									"path": [
+										"groups"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "2B. Create - incorrect permissions",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "574b2021-5a86-4cd6-9c49-f471ef46a9dd",
+										"exec": [
+											"pm.test('Returns correct status', () => {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test('returns correct errors', () => {\r",
+											"    const result = pm.response.json();\r",
+											"    pm.expect(result).to.deep.equal({\r",
+											"        \"error\": true,\r",
+											"        \"messages\": [\r",
+											"            \"Permission must be one of [READ, WRITE, DELETE, SHARE, UPLOAD_FILES]\"\r",
+											"        ]\r",
+											"    });\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"thisNameIsOkay\",\r\n    \"permissions\": [\"TO BE THE KING\"]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{service_url}}/groups",
+									"host": [
+										"{{service_url}}"
+									],
+									"path": [
+										"groups"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "3. Get created group by ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ac011d97-9a05-47e1-ad88-490391949a53",
+										"exec": [
+											"pm.test('Returns correct status', () => {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test('returns correct errors', () => {\r",
+											"    const result = pm.response.json();\r",
+											"    pm.expect(result).to.deep.equal({\r",
+											"        id: pm.collectionVariables.get('group_id'),\r",
+											"        name: pm.collectionVariables.get('group_name'),\r",
+											"        permissions: JSON.parse(pm.collectionVariables.get('group_permissions'))\r",
+											"    });\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"thisNameIsOkay\",\r\n    \"permissions\": [\"TO BE THE KING\"]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{service_url}}/groups?id={{group_id}}",
+									"host": [
+										"{{service_url}}"
+									],
+									"path": [
+										"groups"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "{{group_id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "3A. Get by ID - incorrect ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "2ea2633c-9d01-4e01-bd0e-7ad82f2f9676",
+										"exec": [
+											"pm.test('Returns correct status', () => {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test('returns correct errors', () => {\r",
+											"    const result = pm.response.json();\r",
+											"    pm.expect(result).to.deep.equal({\r",
+											"        \"error\": true,\r",
+											"        \"messages\": [\r",
+											"            \"Group with such ID was not found\"\r",
+											"        ]\r",
+											"    });\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"thisNameIsOkay\",\r\n    \"permissions\": [\"TO BE THE KING\"]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{service_url}}/groups?id=100ad0ee-aeee-4493-87c9-5940a2832b2d",
+									"host": [
+										"{{service_url}}"
+									],
+									"path": [
+										"groups"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "100ad0ee-aeee-4493-87c9-5940a2832b2d"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "4. Update",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "0e9f1c83-842c-41ea-a67f-06a15f76b884",
+										"exec": [
+											"pm.test('Returns correct status', () => {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test('returns id', () => {\r",
+											"    const result = pm.response.json();\r",
+											"    pm.expect(result).to.deep.equal(pm.collectionVariables.get('group_id'))\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"{{group_id}}\",\r\n    \"name\": \"new_name\",\r\n    \"permissions\": []\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{service_url}}/groups",
+									"host": [
+										"{{service_url}}"
+									],
+									"path": [
+										"groups"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "4A. Update without ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "fa81c22b-d4a1-46f6-a0af-b4fc38b02653",
+										"exec": [
+											"pm.test('Returns correct status', () => {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test('returns id', () => {\r",
+											"    const result = pm.response.json();\r",
+											"    pm.expect(result).to.deep.equal({\r",
+											"        \"error\": true,\r",
+											"        \"messages\": [\r",
+											"            \"Group ID is required\"\r",
+											"        ]\r",
+											"    });\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{service_url}}/groups",
+									"host": [
+										"{{service_url}}"
+									],
+									"path": [
+										"groups"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "4B. Update with invalid ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "625ab2bf-d105-47ad-952e-a88919cc6374",
+										"exec": [
+											"pm.test('Returns correct status', () => {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test('returns id', () => {\r",
+											"    const result = pm.response.json();\r",
+											"    pm.expect(result).to.deep.equal({\r",
+											"        \"error\": true,\r",
+											"        \"messages\": [\r",
+											"            \"Group ID must be a valid GUID\"\r",
+											"        ]\r",
+											"    });\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"asgawAWfAF\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{service_url}}/groups",
+									"host": [
+										"{{service_url}}"
+									],
+									"path": [
+										"groups"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "4C. Update - ID doesn't exist",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6730b7df-9884-416d-82bd-8cb50a3a1355",
+										"exec": [
+											"pm.test('Returns correct status', () => {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test('returns id', () => {\r",
+											"    const result = pm.response.json();\r",
+											"    pm.expect(result).to.deep.equal({\r",
+											"        \"error\": true,\r",
+											"        \"messages\": [\r",
+											"            \"Group ID must be a valid GUID\"\r",
+											"        ]\r",
+											"    });\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"100ad0ee-aeee-4493-87c9-5940a2832b2d\",\r\n    \"name\": \"helloapi\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{service_url}}/groups",
+									"host": [
+										"{{service_url}}"
+									],
+									"path": [
+										"groups"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "5. Delete group",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "abf9657a-c17e-4769-a4b9-edfcbbe670da",
+										"exec": [
+											"pm.test('Returns correct status', () => {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{service_url}}/groups?id={{group_id}}",
+									"host": [
+										"{{service_url}}"
+									],
+									"path": [
+										"groups"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "{{group_id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "5A. Delete the same group again",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "7dace84d-c36c-413c-a466-ea039c903a9f",
+										"exec": [
+											"pm.test('Returns correct status', () => {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test('Returns correct error', () => {\r",
+											"    const result = pm.response.json();\r",
+											"    pm.expect(result).to.deep.equal({\r",
+											"        \"error\": true,\r",
+											"        \"messages\": [\r",
+											"            \"Group with such ID was not found\"\r",
+											"        ]\r",
+											"    });\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{service_url}}/groups?id={{group_id}}",
+									"host": [
+										"{{service_url}}"
+									],
+									"path": [
+										"groups"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "{{group_id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "5B. Delete which does not exist",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "9c1358b7-cf4e-4302-8c51-9e59303a11da",
+										"exec": [
+											"pm.test('Returns correct status', () => {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test('Returns correct error', () => {\r",
+											"    const result = pm.response.json();\r",
+											"    pm.expect(result).to.deep.equal({\r",
+											"        \"error\": true,\r",
+											"        \"messages\": [\r",
+											"            \"Group with such ID was not found\"\r",
+											"        ]\r",
+											"    });\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{service_url}}/groups?id=100ad0ee-aeee-4493-87c9-5940a2832b2d",
+									"host": [
+										"{{service_url}}"
+									],
+									"path": [
+										"groups"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "100ad0ee-aeee-4493-87c9-5940a2832b2d"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "6. Get deleted group",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "e0c21ad1-8435-4299-90f2-f9a47822fb5f",
+										"exec": [
+											"pm.test('Returns correct status', () => {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test('Returns correct error', () => {\r",
+											"    const result = pm.response.json();\r",
+											"    pm.expect(result).to.deep.equal({\r",
+											"        \"error\": true,\r",
+											"        \"messages\": [\r",
+											"            \"Group with such ID was not found\"\r",
+											"        ]\r",
+											"    });\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{service_url}}/groups?id={{group_id}}",
+									"host": [
+										"{{service_url}}"
+									],
+									"path": [
+										"groups"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "{{group_id}}"
+										}
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "/permissions",
+					"item": [
+						{
+							"name": "1. Add users to group",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"groupId\": \"00011958-6022-4366-8f4e-55eb0645434d\",\r\n    \"userIds\": [\"00011958-6022-4366-8f4e-f4eb0645434d\", \"1d411958-6022-4366-8f4e-f4eb0645434d\"]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{service_url}}/permissions",
+									"host": [
+										"{{service_url}}"
+									],
+									"path": [
+										"permissions"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "1A. Add users to group - without body",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{service_url}}/permissions",
+									"host": [
+										"{{service_url}}"
+									],
+									"path": [
+										"permissions"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "1B. Add users to group - without body Copy",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{service_url}}/permissions",
+									"host": [
+										"{{service_url}}"
+									],
+									"path": [
+										"permissions"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "1C. Add when one already was added",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"groupId\": \"00011958-6022-4366-8f4e-55eb0645434d\",\r\n    \"userIds\": [\"a8ce1c3c-18c3-4d1a-9e92-d34731bae044\"]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{service_url}}/permissions",
+									"host": [
+										"{{service_url}}"
+									],
+									"path": [
+										"permissions"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
 				}
 			],
 			"protocolProfileBehavior": {}
 		},
 		{
-			"name": "task3",
+			"name": "manual",
 			"item": [
 				{
-					"name": "get user by id (correct) - admin",
+					"name": "get by id",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:4000/users/a8ce1c3c-18c3-4d1a-9e92-d34731bae044",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "4000",
-							"path": [
-								"users",
-								"a8ce1c3c-18c3-4d1a-9e92-d34731bae044"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "update (correct) - admin",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"id\": \"a0eebc99-930b-4ef8-bb6d-6bb9bd38fb15\",\n    \"login\": \"global_super_adminff\",\n    \"password\": \"123hehe\",\n    \"age\": 15,\n    \"isDeleted\": false\n}",
-							"options": {
-								"raw": {}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:4000/users",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "4000",
-							"path": [
-								"users"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "update/create (400) - invalid input",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"id\": \"e7fddbd6-b49b-45d3-9843-c070b0e52accf\",\n    \"password\": \"1234$$$5\",\n    \"age\": 160,\n    \"isDeleted\": false\n}",
-							"options": {
-								"raw": {}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:4000/users",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "4000",
-							"path": [
-								"users"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "create (correct)",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"id\": \"e7fddbd6-b49b-45d3-9843-000000000000\",\n    \"login\": \"moderator\",\n    \"password\": \"qwerty\",\n    \"age\": 21,\n    \"isDeleted\": false\n}",
-							"options": {
-								"raw": {}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:4000/users",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "4000",
-							"path": [
-								"users"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "delete (correct) - admin",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Content-Type",
-								"type": "text",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"id\": \"a0eebc99-930b-4ef8-bb6d-6bb9bd3ffb15\"\n}",
-							"options": {
-								"raw": {}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:4000/users",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "4000",
-							"path": [
-								"users"
-							],
-							"query": [
-								{
-									"key": "",
-									"value": null,
-									"disabled": true
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "search - all by default",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:4000/users",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "4000",
-							"path": [
-								"users"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "search - with limit",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:4000/users?limit=2",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "4000",
-							"path": [
-								"users"
-							],
-							"query": [
-								{
-									"key": "limit",
-									"value": "2"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "search - with substring",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:4000/users?search=d&limit=2",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "4000",
-							"path": [
-								"users"
-							],
-							"query": [
-								{
-									"key": "search",
-									"value": "d"
-								},
-								{
-									"key": "limit",
-									"value": "2"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "get user by id (400) - invalid ID",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:4000/users/e7fddbd6",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "4000",
-							"path": [
-								"users",
-								"e7fddbd6"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "get user by id (404) - ID does not exist",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:4000/users/e7fddbd6-0000-0000-0000-c070b0e52acc",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "4000",
-							"path": [
-								"users",
-								"e7fddbd6-0000-0000-0000-c070b0e52acc"
-							]
+							"raw": ""
 						}
 					},
 					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "6a627208-4787-44eb-9ca9-c47ba8a25c30",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "a603f1a0-5986-4c48-aaed-2535b2f29312",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "0e8f91eb-6ce1-4397-9109-d4e312fb7439",
+			"key": "user_id",
+			"value": ""
+		},
+		{
+			"id": "3e219320-7494-4551-ae49-a8201631fa4d",
+			"key": "service_url",
+			"value": "http://localhost:4000"
+		},
+		{
+			"id": "5d7b2590-ad70-4000-be96-4ba5fea82835",
+			"key": "user_login",
+			"value": "nodeadmin@gmail.com"
+		},
+		{
+			"id": "a53429ac-ddf9-452e-af6b-eded68e5520b",
+			"key": "user_password",
+			"value": "qwertyofcourse"
+		},
+		{
+			"id": "3a01f3a2-e0c6-43e6-af9d-ed205422a17f",
+			"key": "user_age",
+			"value": "15"
+		},
+		{
+			"id": "0dc1d095-b3a1-4c3f-a36e-6d7dc2d9862d",
+			"key": "group_id",
+			"value": ""
+		},
+		{
+			"id": "18d71a8e-cab0-42bb-845d-890f83d3b1be",
+			"key": "group_name",
+			"value": ""
+		},
+		{
+			"id": "74531c52-7421-4d91-8299-38a0b0ad659f",
+			"key": "group_permissions",
+			"value": ""
 		}
 	],
 	"protocolProfileBehavior": {}
