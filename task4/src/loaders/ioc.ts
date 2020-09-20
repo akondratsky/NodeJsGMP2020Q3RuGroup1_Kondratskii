@@ -19,6 +19,9 @@ appContainer
     .bind<Interfaces.IAuthMiddlewareBuilder>(INJECTABLES.AuthMiddlewareBuilder)
     .to(AuthMiddlewareBuilder);
 appContainer
+    .bind<Interfaces.IAuthenticationService>(INJECTABLES.AuthenticationService)
+    .to(Services.AuthenticationService);
+appContainer
     .bind<Interfaces.IMentoringApp>(INJECTABLES.MentoringApp)
     .to(MentoringApp);
 appContainer

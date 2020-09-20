@@ -8,6 +8,7 @@ import {
     IAuthMiddlewareBuilder
 } from 'app/interfaces';
 import { INJECTABLES } from 'app/types';
+import cors from 'cors';
 
 
 @injectable()
@@ -31,13 +32,10 @@ export class MentoringApp implements IMentoringApp {
 
         app.use(express.json());
 
-        app.post('/login', (req, res) => {
-            console.log('sending jwt token');
-            res.json(
-                'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJoZWxsbyI6IndvcmxkIn0.Q3TbgSmdTkEI3rVRUjhustYCh2uBOx9SE0mi1hefDwE');
-        });
+        app.use(cors());    // CORS with default configuration
 
         app.use(this.authMiddlewareBuilder.getAuthInitializerMiddleware());
+        app.use(this.authMiddlewareBuilder.getAuthRoutingMiddleware());
         app.use(this.authMiddlewareBuilder.getAuthMiddleware());
 
         app.use(this.rootRouterBuilder.create('/'));
