@@ -1,6 +1,8 @@
 import { config as configureApplication } from 'dotenv';
 
-const { error, parsed: config } = configureApplication();
+const { error, parsed: config } = configureApplication({
+    path: `.env.${process.env.NODE_ENV || 'development'}`
+});
 
 if (error || !config) {
     throw new Error('Invalid configuration');
