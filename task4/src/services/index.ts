@@ -3,3 +3,4 @@ export * from './GroupService';
 export *  from './PermissionService';
 export * from './LoggerService';
 export * from './constants';
+export * from './AuthenticationService';

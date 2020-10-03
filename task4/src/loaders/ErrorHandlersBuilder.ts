@@ -1,9 +1,10 @@
 import { Response, Request, NextFunction } from 'express';
 import { injectable, inject } from 'inversify';
 import { IErrorHandlersBuilder, ErrorHandler, ILoggerService } from 'app/interfaces';
-import { GroupNotFoundError, UserNotFoundError } from 'app/errors';
+import { GroupNotFoundError, UserNotFoundError, AuthenticationError } from 'app/errors';
 import { ValidationError } from '@hapi/joi';
 import { INJECTABLES } from 'app/types';
+import { JsonWebTokenError } from 'jsonwebtoken';
 
 
 @injectable()
@@ -49,6 +50,28 @@ export class ErrorHandlersBuilder implements IErrorHandlersBuilder {
         });
     }
 
+    authenticationErrorHandler = (error: Error, req: Request, res: Response, next: NextFunction): void => {
+        if (!(error instanceof AuthenticationError)) {
+            return next(error);
+        }
+        res.status(401);
+        res.json({
+            error: true,
+            messages: [error.message]
+        });
+    }
+
+    jwtErrorHandler = (error: Error, req: Request, res: Response, next: NextFunction): void => {
+        if (!(error instanceof JsonWebTokenError)) {
+            return next(error);
+        }
+        res.status(403);
+        res.json({
+            error: true,
+            messages: ['Invalid token']
+        });
+    }
+
     // eslint-disable-next-line
     uncaughtErrorHandler = (error: Error, req: Request, res: Response, next: NextFunction): void => {
         this.loggerService.error(this, this.uncaughtErrorHandler, 'Uncaught exception', error);
@@ -64,6 +87,7 @@ export class ErrorHandlersBuilder implements IErrorHandlersBuilder {
             this.validationErrorHandler,
             this.groupNotFoundErrorHandler,
             this.userNotFoundErrorHandler,
+            this.authenticationErrorHandler,
             this.uncaughtErrorHandler
         ];
     }

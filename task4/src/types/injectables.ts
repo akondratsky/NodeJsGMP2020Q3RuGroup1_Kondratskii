@@ -1,6 +1,8 @@
 export const INJECTABLES = {
     // global
     MentoringApp: Symbol.for('MentoringApp'),
+    AuthMiddlewareBuilder: Symbol.for('AuthMiddlewareBuilder'),
+    AuthenticationService: Symbol.for('AuthenticationService'),
     RootRouterBuilder: Symbol.for('RootRouterBuilder'),
     LoggerService: Symbol.for('LoggerService'),
     ErrorHandlersBuilder: Symbol.for('ErrorHandlersBuilder'),

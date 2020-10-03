@@ -1,9 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 export interface ILoggerService {
-    error(object: any, action: any, message: string, serializable?: any): Promise<void>;
+    error(object: unknown, action: unknown, message: string, serializable?: unknown): Promise<void>;
 
-    info(object: any, action: any, message: string, serializable?: any): Promise<void>;
+    info(object: unknown, action: unknown, message: string, serializable?: unknown): Promise<void>;
 
-    debug(object: any, action: any, message: string, serializable?: any): Promise<void>;
+    debug(object: unknown, action: unknown, message: string, serializable?: unknown): Promise<void>;
 }
