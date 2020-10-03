@@ -47,6 +47,10 @@ export class AuthMiddlewareBuilder implements IAuthMiddlewareBuilder {
             });
     }
 
+    /*
+     * Custom middleware with custom error handling
+      https://stackoverflow.com/questions/35980685/is-node-passport-custom-callback-as-middleware-possible-for-express-routes
+    */
     getAuthMiddleware = (): Handler => {
         return (req, res, next) => {
             passport.authenticate('jwt', (err, user, info) => {

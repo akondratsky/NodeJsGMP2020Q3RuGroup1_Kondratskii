@@ -9,6 +9,110 @@
 			"name": "Tests",
 			"item": [
 				{
+					"name": "/login",
+					"item": [
+						{
+							"name": "1. Correct login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f790e11b-0958-46f8-8ce9-50cb9ca9ce3d",
+										"exec": [
+											"pm.test('Status test', () => {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test('Correct length (if base was initialized properly)', () => {\r",
+											"    const response = pm.response.json()\r",
+											"    pm.expect(typeof response.token).to.equal('string');\r",
+											"});\r",
+											"\r",
+											"pm.collectionVariables.set('bearer_token', pm.response.json().token);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"login\": \"admin\",\r\n    \"password\": \"qwerty\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{service_url}}/login",
+									"host": [
+										"{{service_url}}"
+									],
+									"path": [
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "2. Incorrect password",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "cf0bca8c-8fc9-452b-9ebe-a835699a26eb",
+										"exec": [
+											"pm.test('Status test', () => {\r",
+											"    pm.response.to.have.status(401);\r",
+											"});\r",
+											"\r",
+											"pm.test('Correct length (if base was initialized properly)', () => {\r",
+											"    const response = pm.response.json()\r",
+											"    pm.expect(response).to.deep.equal({\r",
+											"        \"error\": true,\r",
+											"        \"messages\": [\r",
+											"            \"User with such login/password was not found\"\r",
+											"        ]\r",
+											"    });\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"login\": \"admin\",\r\n    \"password\": \"qwerty11\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{service_url}}/login",
+									"host": [
+										"{{service_url}}"
+									],
+									"path": [
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
 					"name": "/users",
 					"item": [
 						{
@@ -1181,7 +1285,7 @@
 											"    pm.expect(result).to.deep.equal({\r",
 											"        \"error\": true,\r",
 											"        \"messages\": [\r",
-											"            \"Group ID must be a valid GUID\"\r",
+											"            \"Group with such ID was not found\"\r",
 											"        ]\r",
 											"    });\r",
 											"});"
@@ -1195,7 +1299,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"id\": \"100ad0ee-aeee-4493-87c9-5940a2832b2d\",\r\n    \"name\": \"helloapi\"\r\n}",
+									"raw": "{\r\n    \"id\": \"100ad0ee-afee-4493-87c9-5940a2832b2d\",\r\n    \"name\": \"helloapi\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1548,11 +1652,91 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "1. Get all users Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "848d5f24-9ad7-47ce-9dad-b0aa32bbc073",
+								"exec": [
+									"const expectedJsonBody = [\r",
+									"    {\r",
+									"        \"id\": \"00011958-6022-4366-8f4e-f4eb0645434d\",\r",
+									"        \"login\": \"admin\",\r",
+									"        \"age\": 15\r",
+									"    },\r",
+									"    {\r",
+									"        \"id\": \"1d411958-6022-4366-8f4e-f4eb0645434d\",\r",
+									"        \"login\": \"nocturnal_depression\",\r",
+									"        \"age\": 42\r",
+									"    },\r",
+									"    {\r",
+									"        \"id\": \"a8ce1c3c-18c3-4d1a-9e92-d34731bae044\",\r",
+									"        \"login\": \"dimmu_borgir\",\r",
+									"        \"age\": 13\r",
+									"    },\r",
+									"    {\r",
+									"        \"id\": \"d2ffd640-5aee-4944-8440-696c829d9cf6\",\r",
+									"        \"login\": \"lamia\",\r",
+									"        \"age\": 22\r",
+									"    },\r",
+									"    {\r",
+									"        \"id\": \"eeeeeeee-5aee-4944-8440-696c829d9cf6\",\r",
+									"        \"login\": \"johny\",\r",
+									"        \"age\": 22\r",
+									"    },\r",
+									"    {\r",
+									"        \"id\": \"7949c23b-2d27-4681-8753-5929a617332b\",\r",
+									"        \"login\": \"john smith\",\r",
+									"        \"age\": 33\r",
+									"    }\r",
+									"];\r",
+									"\r",
+									"pm.test('Status test', () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test('Correct length (if base was initialized properly)', () => {\r",
+									"    const users = pm.response.json()\r",
+									"    pm.expect(users.length).to.equal(6);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{service_url}}/users",
+							"host": [
+								"{{service_url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
 		}
 	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{bearer_token}}",
+				"type": "string"
+			}
+		]
+	},
 	"event": [
 		{
 			"listen": "prerequest",
@@ -1577,43 +1761,48 @@
 	],
 	"variable": [
 		{
-			"id": "0e8f91eb-6ce1-4397-9109-d4e312fb7439",
+			"id": "3784de6d-d68e-462b-8e1a-cdb9df32218d",
 			"key": "user_id",
 			"value": ""
 		},
 		{
-			"id": "3e219320-7494-4551-ae49-a8201631fa4d",
+			"id": "b335fd6c-1089-4d2a-9e9a-c8e14a6635e0",
 			"key": "service_url",
 			"value": "http://localhost:4000"
 		},
 		{
-			"id": "5d7b2590-ad70-4000-be96-4ba5fea82835",
+			"id": "b3aca49c-8b50-40f7-913f-38833f59c43e",
 			"key": "user_login",
 			"value": "nodeadmin@gmail.com"
 		},
 		{
-			"id": "a53429ac-ddf9-452e-af6b-eded68e5520b",
+			"id": "98d03e08-2c5f-46c1-bb74-9cdbb0cf83b3",
 			"key": "user_password",
 			"value": "qwertyofcourse"
 		},
 		{
-			"id": "3a01f3a2-e0c6-43e6-af9d-ed205422a17f",
+			"id": "73082390-a5d9-416a-bdcb-213669bb453c",
 			"key": "user_age",
 			"value": "15"
 		},
 		{
-			"id": "0dc1d095-b3a1-4c3f-a36e-6d7dc2d9862d",
+			"id": "c0f7d4f9-6334-4df0-ab6a-d5b53d816981",
 			"key": "group_id",
 			"value": ""
 		},
 		{
-			"id": "18d71a8e-cab0-42bb-845d-890f83d3b1be",
+			"id": "32c74422-0172-452a-99af-f5408a2cab24",
 			"key": "group_name",
 			"value": ""
 		},
 		{
-			"id": "74531c52-7421-4d91-8299-38a0b0ad659f",
+			"id": "63a21045-ab87-4143-9ede-f4306c3d6af2",
 			"key": "group_permissions",
+			"value": ""
+		},
+		{
+			"id": "a5d24eae-a3b1-4211-885e-261f4a7d4cb9",
+			"key": "bearer_token",
 			"value": ""
 		}
 	],
