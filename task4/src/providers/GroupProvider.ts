@@ -29,7 +29,7 @@ export class GroupProvider implements IGroupProvider {
         });
 
         if (!group) {
-            this.loggerService.error('Group was not found to GET', id);
+            this.loggerService.error(this, this.getById, 'Group was not found to GET', id);
             throw new GroupNotFoundError(id);
         }
 
@@ -52,7 +52,7 @@ export class GroupProvider implements IGroupProvider {
         });
 
         if (numberOfUpdated !== 1) {
-            this.loggerService.error('Group was not found to UPDATE', group);
+            this.loggerService.error(this, this.update, 'Group was not found to UPDATE', group);
             throw new GroupNotFoundError(group.id);
         }
 
@@ -65,7 +65,7 @@ export class GroupProvider implements IGroupProvider {
         });
 
         if (numberOfDeleted !== 1) {
-            this.loggerService.error('Group was not found to DELETE', id);
+            this.loggerService.error(this, this.delete, 'Group was not found to DELETE', id);
             throw new GroupNotFoundError(id);
         }
     }

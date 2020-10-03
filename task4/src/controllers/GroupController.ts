@@ -10,7 +10,7 @@ export class GroupContoller implements IGroupController {
         @inject(INJECTABLES.GroupService) private groupService: IGroupService
     ) {}
 
-    public async get(req: Request, res: Response, next: NextFunction): Promise<Response<Group | Array<Group>>> {
+    public async find(req: Request, res: Response, next: NextFunction): Promise<Response<Group | Array<Group>>> {
         return res.json(
             req.query.id ?
                 await this.groupService.getById(req.query.id as UUID).catch(next)

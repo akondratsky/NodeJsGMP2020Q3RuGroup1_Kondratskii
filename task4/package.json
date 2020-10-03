@@ -8,6 +8,7 @@
     "start:builded": "node ./dst/main.js",
     "build": "tsc && ef-tspm",
     "dev": "nodemon",
+    "dev-debug": "nodemon --debug",
     "lint": "eslint . --ext .ts",
     "db:create": "ts-node -r tsconfig-paths/register ./deploy/setupDatabase.ts"
   },
@@ -19,7 +20,9 @@
     "@types/express": "4.17.7",
     "@types/hapi__joi": "17.1.4",
     "@types/uuid": "8.3.0",
+    "class-logger": "1.3.0",
     "cross-env": "7.0.2",
+    "date-fns": "2.16.1",
     "express": "4.17.1",
     "express-joi-validation": "4.0.4-beta.0",
     "inversify": "5.0.1",

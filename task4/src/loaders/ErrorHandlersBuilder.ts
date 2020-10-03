@@ -1,11 +1,17 @@
 import { Response, Request, NextFunction } from 'express';
-import {  injectable } from 'inversify';
-import { IErrorHandlersBuilder, ErrorHandler } from 'app/interfaces';
+import { injectable, inject } from 'inversify';
+import { IErrorHandlersBuilder, ErrorHandler, ILoggerService } from 'app/interfaces';
 import { GroupNotFoundError, UserNotFoundError } from 'app/errors';
 import { ValidationError } from '@hapi/joi';
+import { INJECTABLES } from 'app/types';
+
 
 @injectable()
 export class ErrorHandlersBuilder implements IErrorHandlersBuilder {
+    constructor(
+        @inject(INJECTABLES.LoggerService) private loggerService: ILoggerService
+    ) {}
+
     validationErrorHandler = (error: Error, req: Request, res: Response, next: NextFunction): void => {
         if (!(error instanceof ValidationError)) {
             return next(error);
@@ -43,11 +49,22 @@ export class ErrorHandlersBuilder implements IErrorHandlersBuilder {
         });
     }
 
+    // eslint-disable-next-line
+    uncaughtErrorHandler = (error: Error, req: Request, res: Response, next: NextFunction): void => {
+        this.loggerService.error(this, this.uncaughtErrorHandler, 'Uncaught exception', error);
+        res.status(500);
+        res.json({
+            error: true,
+            messages: ['Server error']
+        });
+    }
+
     create(): Array<ErrorHandler> {
         return [
             this.validationErrorHandler,
             this.groupNotFoundErrorHandler,
-            this.userNotFoundErrorHandler
+            this.userNotFoundErrorHandler,
+            this.uncaughtErrorHandler
         ];
     }
 }
